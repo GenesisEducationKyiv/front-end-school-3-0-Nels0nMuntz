@@ -78,6 +78,13 @@ We will cover the codebase with tests, including:
 - **Integration tests** for testing how components or modules work together.
 - **End-to-end (E2E) tests** for critical user flows.
 
+We will use **Jest** for usnit test as it is good for tesing pure functions, hooks, and small components. It also provides built-in support for mocking, snapshot testing, coverage reporting. 
+We also will use **@testing-library/react** for testing React components.
+
+For integration tests we will use **Jest** and **React Testing Library** and we will use **MSW (Mock Service Worker)** for mocking network requests during integration tests.
+
+For testing user flows we will use **Playwright** as it is modern, reliable E2E framework. It supports multiple browsers, has built-in debugging tools which makes tests fast, stable, and easy to debug.
+
 We will also integrate these tests into the CI/CD pipeline and run them on every pull request and deployment.
 
 ## Rationale
