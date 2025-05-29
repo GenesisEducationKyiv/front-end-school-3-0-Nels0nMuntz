@@ -53,6 +53,10 @@ Linters and tests will run automatically before each deployment to ensure code q
 - Automating the deployment process reduces human errors.
 - Automated testing and linting help us to be sure about code quality and project stability.
 
+## Status
+
+Proposed
+
 ## Consequences
 
 ### Positive
