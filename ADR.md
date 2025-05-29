@@ -17,8 +17,8 @@ We will implement internationalization support in the application using the reac
 **Disadvantages:**
 - The library with its plugins are quite heavy and will increase the bundle size
 
-**Rejected alternatives:**
-We considered alternatives such as `react-localization`, `react-intl`, and `@lingui/react`. Although some of them has smaller bundle sizes, they would require writing additional code to support features like components update, lazy loading, or fallback handling.
+**Alternatives:**
+We considered alternatives such as `react-localization`, `react-intl`, and `@lingui/react`. Although some of them has smaller bundle sizes, they would require writing additional code to support features like components update, lazy loading, or fallback handling. So, react-i18next is the best choice.
 
 ## Status
 
