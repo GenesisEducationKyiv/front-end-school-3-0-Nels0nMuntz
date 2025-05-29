@@ -66,9 +66,9 @@ Linters and tests will run automatically before each deployment to ensure code q
 - Increasing of project complexity.
 
 
-# ADR: Cover the Codebase with automated tests
-## Context (Forces)
-- Each time a developer changes existing functionality, they must be sure that nothing else is broken. Manual tests are slow, some bugs can be missed. Refactoring is difficult without a test safety net.
+# ADR 3: Cover the Codebase with automated tests
+
+Each time a developer changes existing functionality, they must be sure that nothing else is broken. Manual tests are slow, some bugs can be missed. Refactoring is difficult without a test safety net.
 
 ## Decision
 We will cover the codebase with tests, including:
