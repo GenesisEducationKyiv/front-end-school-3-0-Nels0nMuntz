@@ -44,14 +44,12 @@ There can be inconsistencies between local development, staging, and production 
 
 ## Decision
 We will implement CI/CD pipelines using **GitHub Actions**, along with **Docker** to containerize the application.  
-Linters and tests will run automatically before each deployment to ensure code quality and stability.
 
 ## Rationale
 - Automated deployment significantly increase the speed of the process.
 - There is no need for a separate developer to handle deployments.
 - Docker containers ensure that the app behaves the same across all environments.
 - Automating the deployment process reduces human errors.
-- Automated testing and linting help us to be sure about code quality and project stability.
 
 ## Status
 
@@ -70,7 +68,7 @@ Proposed
 - Increasing of project complexity.
 
 
-# ADR 3: Cover the Codebase with automated tests
+# ADR 3: Cover the codebase with automated tests
 
 Each time a developer changes existing functionality, they must be sure that nothing else is broken. Manual tests are slow, some bugs can be missed. Refactoring is difficult without a test safety net.
 
