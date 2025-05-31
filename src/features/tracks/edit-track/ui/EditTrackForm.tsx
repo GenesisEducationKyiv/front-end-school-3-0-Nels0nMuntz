@@ -1,7 +1,6 @@
-import { Loader2 } from "lucide-react";
 import { useGenresQuery } from "@/entities/genres";
 import { CreateTrackRequest, Track } from "@/entities/track";
-import { Button, DialogClose, DialogFooter, TrackForm } from "@/shared/ui";
+import { TrackForm } from "@/shared/ui";
 import { useEditTrackMutation } from "../api/useEditTrackMutation";
 
 interface Props {
