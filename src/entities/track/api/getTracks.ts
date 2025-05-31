@@ -1,9 +1,16 @@
 import { api } from "@/shared/api";
+import { parseApiResponse } from "@/shared/lib";
 import { GetTracksRequest } from "../model/types/getTracksRequest";
 import { GetTracksResponse } from "../model/types/getTracksResponse";
+import { getTracksResponseSchema } from "../model/schemas/getTracksResponseSchema";
 
-export const getTracks = ({ pagination, sorting, filters, search }: GetTracksRequest) =>
-  api.get<GetTracksResponse>("tracks", {
+export const getTracks = async ({
+  pagination,
+  sorting,
+  filters,
+  search,
+}: GetTracksRequest): Promise<GetTracksResponse> => {
+  const response = await api.get<GetTracksResponse>("tracks", {
     query: {
       ...(pagination?.pageIndex && { page: pagination.pageIndex + 1 }),
       ...(pagination?.pageSize && { limit: pagination.pageSize }),
@@ -14,3 +21,5 @@ export const getTracks = ({ pagination, sorting, filters, search }: GetTracksReq
       ...(search && { search }),
     },
   });
+  return parseApiResponse(response, getTracksResponseSchema);
+};

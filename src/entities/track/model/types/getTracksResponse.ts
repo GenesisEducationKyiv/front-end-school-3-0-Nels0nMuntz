@@ -1,11 +1,4 @@
-import { Track } from "./track";
+import { z } from "zod";
+import { getTracksResponseSchema } from "../schemas/getTracksResponseSchema";
 
-export interface GetTracksResponse {
-  data: Track[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
-}
+export type GetTracksResponse = z.infer<typeof getTracksResponseSchema>;
