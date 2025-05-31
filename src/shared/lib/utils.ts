@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const isError = (response: any): response is ApiError => {
+export const isError = (response: unknown): response is ApiError => {
   return (response as ApiError).error !== undefined;
 };
 

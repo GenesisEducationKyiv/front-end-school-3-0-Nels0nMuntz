@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../configs";
 
 type RequestUrl = keyof typeof API_ENDPOINTS;
 type RequestOptions = Omit<RequestInit, "body"> & {
-  body?: any;
+  body?: BodyInit;
   params?: string;
   query?: RequestParams;
 };

@@ -1,16 +1,16 @@
-import { Control } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./tailwind/form";
 import { Input } from "./tailwind/input";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues>  {
+  control: Control<T>;
+  name: Path<T>;
   label: string;
   inputTestId?: string;
   errorTextTestId?: string;
 }
 
-export const TextField: React.FC<Props> = ({ control, name, label, inputTestId, errorTextTestId }) => {
+export const TextField = <T extends FieldValues>({ control, name, label, inputTestId, errorTextTestId }: Props<T>) => {
   return (
     <FormField
       control={control}
