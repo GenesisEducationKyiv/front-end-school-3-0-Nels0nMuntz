@@ -50,9 +50,9 @@ export const useAudioPlayerData = () => {
 
   useEffect(() => {
     setAudioControl(audioRef.current);
-  }, [currentTrack]);
+  }, [currentTrack, setAudioControl]);
 
-  useEffect(playTrackFromQueue, [tracks]);
+  useEffect(playTrackFromQueue, [tracks, playTrackFromQueue]);
 
   const togglePlay = () => {
     if (isPlaying) {

@@ -35,7 +35,7 @@ export const TrackForm: React.FC<Props> = ({ values, genres, isSubmitting, onSub
   const imageUrl = form.watch("coverImage");
   const options = useMemo(() => {
     return genres.map((item) => ({ label: item, value: item }));
-  }, genres);
+  }, [genres]);
   const handleSubmit = form.handleSubmit(
     (values) => {
       if (coverLoadingError) {

@@ -61,7 +61,7 @@ export const TrackList = () => {
       setCurrentTrackIndex(-1);
       setIsInitialized(true);
     }
-  }, [tracksData]);
+  }, [setCurrentTrackIndex, setIsInitialized, setTracks, tracksData]);
 
   const columns = useMemo<ColumnDef<Track>[]>(
     () => [
