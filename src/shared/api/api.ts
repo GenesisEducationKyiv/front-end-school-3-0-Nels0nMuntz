@@ -1,11 +1,11 @@
 import { API_ENDPOINTS } from "./apiEndpoints";
 import { RequestParams } from "../model/types/requestParams";
-import { isError, objectToQueryParams } from "../lib/utils";
+import { isError, isFormData, objectToQueryParams } from "../lib/utils";
 import { API_BASE_URL } from "../configs";
 
 type RequestUrl = keyof typeof API_ENDPOINTS;
 type RequestOptions = Omit<RequestInit, "body"> & {
-  body?: BodyInit;
+  body?: unknown;
   params?: string;
   query?: RequestParams;
 };
@@ -15,16 +15,28 @@ const httpClient = (method: HTTPMethod) => {
   return async <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
     try {
       const params = options?.params ? `/${options?.params}` : "";
-      const query = options?.query ? `?${objectToQueryParams(options.query)}` : "";
-      const isFormData = options?.body instanceof FormData;
-      const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS[url]}${params}${query}`, {
-        method,
-        headers: {
-          ...(!isFormData && { ["Content-Type"]: "application/json" }),
-          ...options?.headers,
-        },
-        ...options,
-      });
+      const query = options?.query
+        ? `?${objectToQueryParams(options.query)}`
+        : "";
+      const body = options?.body 
+        ? isFormData(options.body)
+          ? options.body
+          : JSON.stringify(options.body)
+        : undefined;
+      const response = await fetch(
+        `${API_BASE_URL}${API_ENDPOINTS[url]}${params}${query}`,
+        {
+          ...options,
+          method,
+          headers: {
+            ...(!isFormData(options?.body) && {
+              ["Content-Type"]: "application/json",
+            }),
+            ...options?.headers,
+          },
+          body,
+        }
+      );
       if (response.ok && response.statusText === "No Content") return;
 
       const json = await response.json();
@@ -42,23 +54,15 @@ const httpClient = (method: HTTPMethod) => {
 
 const get = httpClient("GET");
 const post = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  const isFormData = options?.body instanceof FormData;
-  const body = isFormData ? options?.body : JSON.stringify(options?.body || {});
-  return httpClient("POST")<ResponseData>(url, {
-    ...options,
-    body,
-  });
+  return httpClient("POST")<ResponseData>(url, options);
 };
 const put = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("PUT")<ResponseData>(url, {
-    ...options,
-    body: JSON.stringify(options?.body || {}),
-  });
+  return httpClient("PUT")<ResponseData>(url, options);
 };
 const remove = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
   return httpClient("DELETE")<ResponseData>(url, {
     ...options,
-    body: JSON.stringify(options?.body || {}),
+    body: options?.body || {},
   });
 };
 

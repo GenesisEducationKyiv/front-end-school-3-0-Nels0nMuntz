@@ -11,6 +11,10 @@ export const isError = (response: unknown): response is ApiError => {
   return (response as ApiError).error !== undefined;
 };
 
+export const isFormData = (data: unknown): data is FormData => {
+  return data instanceof FormData;
+};
+
 export const objectToQueryParams = (obj: RequestParams) => {
   return Object.entries(obj)
     .map(([key, value]) => {
