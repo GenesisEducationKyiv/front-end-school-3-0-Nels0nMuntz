@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "./apiEndpoints";
 import { RequestParams } from "../model/types/requestParams";
-import { isError, isFormData, objectToQueryParams } from "../lib/utils";
+import { isApiError, isFormData, objectToQueryParams } from "../lib/utils";
 import { API_BASE_URL } from "../configs";
 
 type RequestUrl = keyof typeof API_ENDPOINTS;
@@ -41,7 +41,7 @@ const httpClient = (method: HTTPMethod) => {
 
       const json = await response.json();
 
-      if (isError(json)) {
+      if (isApiError(json)) {
         throw new Error(json.message || json.error);
       }
       return json as ResponseData;

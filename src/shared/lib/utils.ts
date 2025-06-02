@@ -8,8 +8,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const isError = (response: unknown): response is ApiError => {
-  return (response as ApiError).error !== undefined;
+export const isApiError = (response: unknown): response is ApiError => {
+  return response !== null && typeof response === "object" &&  "error" in response;
 };
 
 export const isFormData = (data: unknown): data is FormData => {
