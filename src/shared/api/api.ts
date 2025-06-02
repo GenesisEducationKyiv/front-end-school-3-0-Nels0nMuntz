@@ -12,7 +12,7 @@ type RequestOptions = Omit<RequestInit, "body"> & {
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 const httpClient = (method: HTTPMethod) => {
-  return async <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
+  return async (url: RequestUrl, options?: RequestOptions) => {
     try {
       const params = options?.params ? `/${options?.params}` : "";
       const query = options?.query
@@ -44,7 +44,7 @@ const httpClient = (method: HTTPMethod) => {
       if (isApiError(json)) {
         throw new Error(json.message || json.error);
       }
-      return json as ResponseData;
+      return json;
     } catch (error) {
       console.log({ error });
       throw error;
@@ -53,14 +53,14 @@ const httpClient = (method: HTTPMethod) => {
 };
 
 const get = httpClient("GET");
-const post = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("POST")<ResponseData>(url, options);
+const post = (url: RequestUrl, options?: RequestOptions) => {
+  return httpClient("POST")(url, options);
 };
-const put = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("PUT")<ResponseData>(url, options);
+const put = (url: RequestUrl, options?: RequestOptions) => {
+  return httpClient("PUT")(url, options);
 };
-const remove = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("DELETE")<ResponseData>(url, {
+const remove = (url: RequestUrl, options?: RequestOptions) => {
+  return httpClient("DELETE")(url, {
     ...options,
     body: options?.body || {},
   });

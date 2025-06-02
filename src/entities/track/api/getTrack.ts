@@ -4,6 +4,6 @@ import { Track } from "../model/types/track";
 import { trackSchema } from "../model/schemas/trackSchema";
 
 export const getTrack = async (slug: string): Promise<Track> => {
-    const response = await api.get<Track>("tracks", { params: slug });
+    const response = await api.get("tracks", { params: slug });
     return parseApiResponse(response, trackSchema);
 }

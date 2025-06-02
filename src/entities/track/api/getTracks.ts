@@ -10,7 +10,7 @@ export const getTracks = async ({
   filters,
   search,
 }: GetTracksRequest): Promise<GetTracksResponse> => {
-  const response = await api.get<GetTracksResponse>("tracks", {
+  const response = await api.get("tracks", {
     query: {
       ...(pagination?.pageIndex && { page: pagination.pageIndex + 1 }),
       ...(pagination?.pageSize && { limit: pagination.pageSize }),
