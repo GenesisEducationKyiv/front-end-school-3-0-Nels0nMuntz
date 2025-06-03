@@ -1,6 +1,6 @@
 export {
   cn,
-  isError,
+  isApiError,
   objectToQueryParams,
   formatDate,
   isFormData,
