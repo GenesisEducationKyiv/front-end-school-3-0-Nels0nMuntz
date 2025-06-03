@@ -24,12 +24,11 @@ export const TrackForm: React.FC<Props> = ({ values, genres, isSubmitting, onSub
   const form = useForm<TrackFormValues>({
     resolver: zodResolver(trackFormSchema),
     defaultValues: {
-      title: "",
-      artist: "",
-      album: "",
-      coverImage: "",
-      genres: [],
-      ...values,
+      title: values?.title || "",
+      artist: values?.artist || "",
+      album: values?.album || "",
+      coverImage: values?.coverImage || "",
+      genres: values?.genres || [],
     },
   });
   const imageUrl = form.watch("coverImage");
