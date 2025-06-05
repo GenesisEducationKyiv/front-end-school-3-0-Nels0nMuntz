@@ -3,22 +3,23 @@ import { RequestParams } from "../model/types/requestParams";
 import { isApiError, isFormData, objectToQueryParams } from "../lib/utils";
 import { API_BASE_URL } from "../configs";
 
+type RequestBody = object | FormData;
 type RequestUrl = keyof typeof API_ENDPOINTS;
-type RequestOptions = Omit<RequestInit, "body"> & {
-  body?: unknown;
+type RequestOptions<TBody extends RequestBody = object> = Omit<RequestInit, "body"> & {
+  body?: TBody;
   params?: string;
   query?: RequestParams;
 };
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-const httpClient = (method: HTTPMethod) => {
-  return async (url: RequestUrl, options?: RequestOptions) => {
+const httpClient = <TBody extends RequestBody = object>(method: HTTPMethod) => {
+  return async (url: RequestUrl, options?: RequestOptions<TBody>) => {
     try {
       const params = options?.params ? `/${options?.params}` : "";
       const query = options?.query
         ? `?${objectToQueryParams(options.query)}`
         : "";
-      const body = options?.body 
+      const body = options?.body
         ? isFormData(options.body)
           ? options.body
           : JSON.stringify(options.body)
@@ -53,12 +54,8 @@ const httpClient = (method: HTTPMethod) => {
 };
 
 const get = httpClient("GET");
-const post = (url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("POST")(url, options);
-};
-const put = (url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("PUT")(url, options);
-};
+const post = httpClient<RequestBody>("POST");
+const put = httpClient("PUT");
 const remove = (url: RequestUrl, options?: RequestOptions) => {
   return httpClient("DELETE")(url, {
     ...options,
