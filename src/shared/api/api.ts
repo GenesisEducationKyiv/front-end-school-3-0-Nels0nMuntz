@@ -1,38 +1,51 @@
 import { API_ENDPOINTS } from "./apiEndpoints";
 import { RequestParams } from "../model/types/requestParams";
-import { isError, objectToQueryParams } from "../lib/utils";
+import { isApiError, isFormData, objectToQueryParams } from "../lib/utils";
 import { API_BASE_URL } from "../configs";
 
+type RequestBody = object | FormData;
 type RequestUrl = keyof typeof API_ENDPOINTS;
-type RequestOptions = Omit<RequestInit, "body"> & {
-  body?: any;
+type RequestOptions<TBody extends RequestBody = object> = Omit<RequestInit, "body"> & {
+  body?: TBody;
   params?: string;
   query?: RequestParams;
 };
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-const httpClient = (method: HTTPMethod) => {
-  return async <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
+const httpClient = <TBody extends RequestBody = object>(method: HTTPMethod) => {
+  return async (url: RequestUrl, options?: RequestOptions<TBody>) => {
     try {
       const params = options?.params ? `/${options?.params}` : "";
-      const query = options?.query ? `?${objectToQueryParams(options.query)}` : "";
-      const isFormData = options?.body instanceof FormData;
-      const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS[url]}${params}${query}`, {
-        method,
-        headers: {
-          ...(!isFormData && { ["Content-Type"]: "application/json" }),
-          ...options?.headers,
-        },
-        ...options,
-      });
+      const query = options?.query
+        ? `?${objectToQueryParams(options.query)}`
+        : "";
+      const body = options?.body
+        ? isFormData(options.body)
+          ? options.body
+          : JSON.stringify(options.body)
+        : undefined;
+      const response = await fetch(
+        `${API_BASE_URL}${API_ENDPOINTS[url]}${params}${query}`,
+        {
+          ...options,
+          method,
+          headers: {
+            ...(!isFormData(options?.body) && {
+              ["Content-Type"]: "application/json",
+            }),
+            ...options?.headers,
+          },
+          body,
+        }
+      );
       if (response.ok && response.statusText === "No Content") return;
 
       const json = await response.json();
 
-      if (isError(json)) {
+      if (isApiError(json)) {
         throw new Error(json.message || json.error);
       }
-      return json as ResponseData;
+      return json;
     } catch (error) {
       console.log({ error });
       throw error;
@@ -41,24 +54,12 @@ const httpClient = (method: HTTPMethod) => {
 };
 
 const get = httpClient("GET");
-const post = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  const isFormData = options?.body instanceof FormData;
-  const body = isFormData ? options?.body : JSON.stringify(options?.body || {});
-  return httpClient("POST")<ResponseData>(url, {
+const post = httpClient<RequestBody>("POST");
+const put = httpClient("PUT");
+const remove = (url: RequestUrl, options?: RequestOptions) => {
+  return httpClient("DELETE")(url, {
     ...options,
-    body,
-  });
-};
-const put = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("PUT")<ResponseData>(url, {
-    ...options,
-    body: JSON.stringify(options?.body || {}),
-  });
-};
-const remove = <ResponseData>(url: RequestUrl, options?: RequestOptions) => {
-  return httpClient("DELETE")<ResponseData>(url, {
-    ...options,
-    body: JSON.stringify(options?.body || {}),
+    body: options?.body || {},
   });
 };
 

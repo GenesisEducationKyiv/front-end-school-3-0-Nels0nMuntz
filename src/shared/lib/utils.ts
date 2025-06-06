@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 import { ApiError } from "../model";
 import { RequestParams } from "../model/types/requestParams";
 
@@ -7,8 +8,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const isError = (response: any): response is ApiError => {
-  return (response as ApiError).error !== undefined;
+export const isApiError = (response: unknown): response is ApiError => {
+  return response !== null && typeof response === "object" &&  "error" in response;
+};
+
+export const isFormData = (data: unknown): data is FormData => {
+  return data instanceof FormData;
 };
 
 export const objectToQueryParams = (obj: RequestParams) => {
@@ -20,7 +25,9 @@ export const objectToQueryParams = (obj: RequestParams) => {
 
       if (Array.isArray(value)) {
         return value
-          .map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`)
+          .map(
+            (item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
+          )
           .join("&");
       }
 
@@ -37,3 +44,18 @@ export const formatDate = (date: string) => {
     day: "numeric",
   });
 };
+
+export const parseApiResponse = <T>(
+  response: unknown,
+  schema: z.ZodSchema<T>
+): T => {
+  try {
+    return schema.parse(response);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Response validation error:", error.errors);
+      throw new Error("Invalid data format received from the API.");
+    }
+    throw error;
+  }
+}

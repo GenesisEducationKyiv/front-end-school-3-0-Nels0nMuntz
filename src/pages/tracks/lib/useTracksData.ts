@@ -17,7 +17,8 @@ export const useTracksData = () => {
   const pagination = usePagination();
   const searchText = useSearchText();
   const debouncedSearchText = useDebounce(searchText, 500);
-  const { setSorting, setFilters, setPagination, setIsSearching } = useSettingsActions();
+  const { setSorting, setFilters, setPagination, setIsSearching } =
+    useSettingsActions();
   const { genresData = [], genresError, isLoadingGenres } = useGenresQuery();
   const { tracksData, tracksError, isLoadingTracks } = useTracksQuery({
     pagination,
@@ -50,7 +51,14 @@ export const useTracksData = () => {
     } else {
       setIsSearching(false);
     }
-  }, [searchText, isLoadingTracks]);
+  }, [
+    searchText,
+    isLoadingTracks,
+    setSorting,
+    setPagination,
+    setFilters,
+    setIsSearching,
+  ]);
 
   if (tracksError) {
     toast.error(tracksError.message);

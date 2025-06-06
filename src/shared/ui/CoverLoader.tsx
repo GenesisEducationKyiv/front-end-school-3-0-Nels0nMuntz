@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-import { Control } from "react-hook-form";
+import { useState } from "react";
+import { Control, FieldValues, Path } from "react-hook-form";
 import { Music4 } from "lucide-react";
 import { useDebounce } from "../lib";
 import { TextField } from "./TextField";
 
-interface Props {
+interface Props<T extends FieldValues> {
   url: string;
-  control: Control<any>;
-  name: string;
+  control: Control<T>;
+  name: Path<T>;
   label: string;
   onError: (error: string) => void;
 }
 
-export const CoverLoader: React.FC<Props> = ({ url, control, label, name, onError }) => {
+export const CoverLoader = <T extends FieldValues>({
+  url,
+  control,
+  label,
+  name,
+  onError,
+}: Props<T>) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const debouncedImageUrl = useDebounce(url, 1000);
   return (
@@ -33,7 +39,13 @@ export const CoverLoader: React.FC<Props> = ({ url, control, label, name, onErro
           }}
         />
       )}
-      <TextField control={control} name={name} label={label} inputTestId="input-cover-image" errorTextTestId="error-coverImage"/>
+      <TextField
+        control={control}
+        name={name}
+        label={label}
+        inputTestId="input-cover-image"
+        errorTextTestId="error-coverImage"
+      />
       {imageLoaded && debouncedImageUrl ? (
         <img
           src={debouncedImageUrl}

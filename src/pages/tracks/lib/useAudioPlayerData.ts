@@ -7,7 +7,6 @@ import {
   usePlaylistActions,
   usePlaylistIsInitialized,
 } from "@/shared/model";
-import { Track } from "@/entities/track";
 
 export const useAudioPlayerData = () => {
   const tracks = usePlaylistTracks();
@@ -24,7 +23,7 @@ export const useAudioPlayerData = () => {
   const [buffered, setBuffered] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const currentTrack = tracks[currentTrackIndex] as Track | undefined;
+  const currentTrack = tracks[currentTrackIndex];
   const hasNext = currentTrackIndex < tracks.length - 1;
   const hasPrevious = currentTrackIndex > 0;
 
@@ -50,9 +49,9 @@ export const useAudioPlayerData = () => {
 
   useEffect(() => {
     setAudioControl(audioRef.current);
-  }, [currentTrack]);
+  }, [currentTrack, setAudioControl]);
 
-  useEffect(playTrackFromQueue, [tracks]);
+  useEffect(playTrackFromQueue, [tracks, playTrackFromQueue]);
 
   const togglePlay = () => {
     if (isPlaying) {

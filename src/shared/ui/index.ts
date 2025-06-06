@@ -44,7 +44,6 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField,
 } from "./tailwind/form";
 export {
   Dialog,

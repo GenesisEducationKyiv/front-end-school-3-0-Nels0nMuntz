@@ -24,7 +24,9 @@ export const useAddTrackMutation = ({ onSuccess }: Options) => {
           album: newRecord.album,
           genres: newRecord.genres,
           coverImage: newRecord.coverImage,
-        } as Track,
+          slug: newRecord.title,
+          audioFile: "",
+        },
         ...(oldRecords || []),
       ]);
       return { prevRecords };
