@@ -69,11 +69,8 @@ export const unwrapQueryResult = <
   TErrorType extends AppErrorType = AppErrorType
 >(
   result: Belt.Ok<TData> | Belt.Error<AppError<TErrorType>> | undefined,
-  defaultValue: TData
 ): QueryResult<TData, TErrorType> => {
-  const queryResult: QueryResult<TData, TErrorType> = {
-    data: defaultValue,
-  };
+  const queryResult: QueryResult<TData, TErrorType> = {};
 
   if (result === undefined) return queryResult;
 

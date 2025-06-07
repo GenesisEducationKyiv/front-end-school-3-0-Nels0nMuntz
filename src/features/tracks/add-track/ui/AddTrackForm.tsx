@@ -10,8 +10,8 @@ interface Props {
 }
 
 export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
-  const { result } = useGenresQuery();
-  const { data, error } = unwrapQueryResult(result, []);
+  const { genresResult } = useGenresQuery();
+  const { data = [], error } = unwrapQueryResult(genresResult);
   const { mutate, isPending } = useAddTrackMutation({ onSuccess: onSubmitted });
   const handleSubmit = (values: CreateTrackRequest) => {
     mutate({

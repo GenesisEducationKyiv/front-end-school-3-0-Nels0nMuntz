@@ -5,6 +5,6 @@ export type QueryResult<
   TData,
   TErrorType extends AppErrorType = AppErrorType
 > = {
-  data: TData;
+  data?: TData;
   error?: AppError<TErrorType>;
 };

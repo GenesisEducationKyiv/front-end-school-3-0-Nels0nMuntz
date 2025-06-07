@@ -1,16 +1,25 @@
 import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/shared/api";
-import { getTracks, GetTracksRequest, GetTracksResponse } from "@/entities/track";
+import * as Belt from "@mobily/ts-belt";
+import { AppError, QUERY_KEYS } from "@/shared/api";
+import {
+  getTracks,
+  GetTracksRequest,
+  GetTracksResponse,
+} from "@/entities/track";
+import { TrackErrorType } from "@/entities/track/model/types/trackErrorType";
 
 interface Options extends GetTracksRequest {
-  queryOptions?: Partial<QueryObserverOptions<GetTracksResponse | undefined>>;
+  queryOptions?: Partial<
+    QueryObserverOptions<
+      Belt.Result<GetTracksResponse, AppError<TrackErrorType>> | undefined
+    >
+  >;
 }
 
 export const useTracksQuery = (options: Options) => {
   const {
-    data: tracksData,
+    data: tracksResult,
     isLoading: isLoadingTracks,
-    error: tracksError,
   } = useQuery({
     queryKey: [QUERY_KEYS.tracks, options],
     queryFn: () => {
@@ -27,8 +36,7 @@ export const useTracksQuery = (options: Options) => {
     ...options?.queryOptions,
   });
   return {
-    tracksData,
+    tracksResult,
     isLoadingTracks,
-    tracksError,
   };
 };

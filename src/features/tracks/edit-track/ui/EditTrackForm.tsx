@@ -11,8 +11,8 @@ interface Props {
 }
 
 export const EditTrackForm: React.FC<Props> = ({ track, onUpdated }) => {
-  const { result } = useGenresQuery();
-  const { data, error } = unwrapQueryResult(result, []);
+  const { genresResult } = useGenresQuery();
+  const { data = [], error } = unwrapQueryResult(genresResult);
   const { mutate, isPending } = useEditTrackMutation({ onSuccess: onUpdated });
   const handleSubmit = (values: CreateTrackRequest) => {
     mutate({
