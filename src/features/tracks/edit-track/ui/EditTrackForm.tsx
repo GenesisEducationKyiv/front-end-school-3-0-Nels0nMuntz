@@ -1,6 +1,8 @@
-import { useGenresQuery } from "@/entities/genres";
+import { toast } from "sonner";
+import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
 import { CreateTrackRequest, Track } from "@/entities/track";
 import { TrackForm } from "@/shared/ui";
+import { unwrapQueryResult } from "@/shared/lib";
 import { useEditTrackMutation } from "../api/useEditTrackMutation";
 
 interface Props {
@@ -9,7 +11,8 @@ interface Props {
 }
 
 export const EditTrackForm: React.FC<Props> = ({ track, onUpdated }) => {
-  const { genresData = [] } = useGenresQuery();
+  const { result } = useGenresQuery();
+  const { data, error } = unwrapQueryResult(result, []);
   const { mutate, isPending } = useEditTrackMutation({ onSuccess: onUpdated });
   const handleSubmit = (values: CreateTrackRequest) => {
     mutate({
@@ -21,10 +24,15 @@ export const EditTrackForm: React.FC<Props> = ({ track, onUpdated }) => {
       genres: values.genres,
     });
   };
+
+  if (error) {
+    toast.error(GENRE_API_ERROR_MESSAGES[error.type]);
+  }
+
   return (
     <TrackForm
       onSubmit={handleSubmit}
-      genres={genresData}
+      genres={data}
       isSubmitting={isPending}
       values={{
         title: track.title,

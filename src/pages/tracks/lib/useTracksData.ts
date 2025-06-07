@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { useGenresQuery } from "@/entities/genres";
+import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
 import { useTracksQuery } from "../api/useTracksQuery";
 import {
   useFilters,
@@ -9,7 +9,7 @@ import {
   useSettingsActions,
   useSorting,
 } from "@/shared/model";
-import { useDebounce } from "@/shared/lib";
+import { unwrapQueryResult, useDebounce } from "@/shared/lib";
 
 export const useTracksData = () => {
   const sorting = useSorting();
@@ -19,7 +19,7 @@ export const useTracksData = () => {
   const debouncedSearchText = useDebounce(searchText, 500);
   const { setSorting, setFilters, setPagination, setIsSearching } =
     useSettingsActions();
-  const { genresData = [], genresError, isLoadingGenres } = useGenresQuery();
+  const { result: genresResult, isLoadingGenres } = useGenresQuery();
   const { tracksData, tracksError, isLoadingTracks } = useTracksQuery({
     pagination,
     sorting: {
@@ -35,6 +35,10 @@ export const useTracksData = () => {
       placeholderData: (oldData) => oldData,
     },
   });
+  const { data: genresData, error: genresError } = unwrapQueryResult(
+    genresResult,
+    []
+  );
 
   useEffect(() => {
     if (searchText) {
@@ -64,7 +68,7 @@ export const useTracksData = () => {
     toast.error(tracksError.message);
   }
   if (genresError) {
-    toast.error(genresError.message);
+    toast.error(GENRE_API_ERROR_MESSAGES[genresError.type]);
   }
 
   const isLoading = isLoadingTracks || isLoadingGenres;
