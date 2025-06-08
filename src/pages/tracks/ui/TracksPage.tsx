@@ -1,4 +1,8 @@
-import { SearchInput, AddTrackButton, DeleteMultipleTraksButton } from "@/features/tracks";
+import {
+  SearchInput,
+  AddTrackButton,
+  DeleteMultipleTraksButton,
+} from "@/features/tracks";
 import { Section } from "./components/Section";
 import { TrackList } from "./components/TrackList";
 import { AudioPlayer } from "./components/AudioPlayer/AudioPlayer";

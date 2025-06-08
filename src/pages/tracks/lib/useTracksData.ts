@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
 import { TRACk_API_ERROR_MESSAGES } from "@/entities/track";
 import {
+  SortKey,
   useFilters,
   usePagination,
   useSearchText,
@@ -24,7 +25,7 @@ export const useTracksData = () => {
   const { tracksResult, isLoadingTracks } = useTracksQuery({
     pagination,
     sorting: {
-      sortBy: sorting[0]?.id,
+      sortBy: sorting[0]?.id as SortKey,
       order: sorting[0]?.desc ? "desc" : "asc",
     },
     filters: {
