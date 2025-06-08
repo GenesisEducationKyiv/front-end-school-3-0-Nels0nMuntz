@@ -26,8 +26,6 @@ export const useTracksQuery = (options: Options) => {
       let params: GetTracksRequest = {};
       if (options.search) {
         params.search = options.search;
-      } else if (options?.filters?.artist || options?.filters?.genre) {
-        params.filters = options.filters;
       } else {
         params = options;
       }
