@@ -1,27 +1,27 @@
 import { z } from "zod";
-import * as Belt from "@mobily/ts-belt";
+import { O, pipe } from "@mobily/ts-belt";
 import { useSearchParams } from "react-router-dom";
 import { URL_PARAMS_KEYS } from "../config/constants/urlParamsKeys";
 import { sortKeySchema, sortOrderSchema } from "@/shared/model";
 
 const normalizeStringInput = (input: string | null) => {
-  return Belt.pipe(
-    Belt.O.fromNullable(input),
-    Belt.O.map((value) => value.trim()),
-    Belt.O.filter((value) => value.length > 0)
+  return pipe(
+    O.fromNullable(input),
+    O.map((value) => value.trim()),
+    O.filter((value) => value.length > 0)
   );
 };
 
 const getStringParam = (input: string | null) => {
-  return Belt.O.getWithDefault(normalizeStringInput(input), "");
+  return O.getWithDefault(normalizeStringInput(input), "");
 };
 
 const getNumberParam = (input: string | null) => {
-  return Belt.O.getWithDefault(
-    Belt.pipe(
+  return O.getWithDefault(
+    pipe(
       normalizeStringInput(input),
-      Belt.O.map((value) => parseInt(value, 10)),
-      Belt.O.filter((value) => !Number.isNaN(value))
+      O.map((value) => parseInt(value, 10)),
+      O.filter((value) => !Number.isNaN(value))
     ),
     0
   );
@@ -31,10 +31,10 @@ const getParsedParam = <T>(
   input: string | null,
   schema: z.ZodType<T>
 ): T | "" => {
-  return Belt.O.getWithDefault(
-    Belt.pipe(
+  return O.getWithDefault(
+    pipe(
       normalizeStringInput(input),
-      Belt.O.flatMap((value) => {
+      O.flatMap((value) => {
         const result = schema.safeParse(value);
         return result.success ? result.data : "";
       })

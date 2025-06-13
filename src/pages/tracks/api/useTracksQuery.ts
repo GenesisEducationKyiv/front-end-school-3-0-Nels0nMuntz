@@ -1,5 +1,5 @@
 import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
-import * as Belt from "@mobily/ts-belt";
+import { Result } from "@mobily/ts-belt";
 import { AppError, QUERY_KEYS } from "@/shared/api";
 import {
   getTracks,
@@ -11,7 +11,7 @@ import { TrackErrorType } from "@/entities/track/model/types/trackErrorType";
 interface Options extends GetTracksRequest {
   queryOptions?: Partial<
     QueryObserverOptions<
-      Belt.Result<GetTracksResponse, AppError<TrackErrorType>> | undefined
+      Result<GetTracksResponse, AppError<TrackErrorType>> | undefined
     >
   >;
 }

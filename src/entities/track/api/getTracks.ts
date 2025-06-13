@@ -1,4 +1,4 @@
-import * as Belt from "@mobily/ts-belt";
+import { R, Result } from "@mobily/ts-belt";
 import { api, AppError } from "@/shared/api";
 import { parseApiResponse } from "@/shared/lib";
 import { GetTracksRequest } from "../model/types/getTracksRequest";
@@ -12,7 +12,7 @@ export const getTracks = async ({
   filters,
   search,
 }: GetTracksRequest): Promise<
-  Belt.Result<GetTracksResponse, AppError<TrackErrorType>>
+  Result<GetTracksResponse, AppError<TrackErrorType>>
 > => {
   try {
     const response = await api.get("tracks", {
@@ -27,8 +27,8 @@ export const getTracks = async ({
       },
     });
     const parsed = parseApiResponse(response, getTracksResponseSchema);
-    return Belt.R.Ok(parsed);
+    return R.Ok(parsed);
   } catch (error) {
-    return Belt.R.Error(AppError.wrap(error, TrackErrorType.TarcksNotFound));
+    return R.Error(AppError.wrap(error, TrackErrorType.TarcksNotFound));
   }
 };

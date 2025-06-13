@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import * as Belt from "@mobily/ts-belt";
+import { Ok, Error as BeltError, R } from "@mobily/ts-belt";
 import { ApiError, AppErrorType, QueryResult } from "../model";
 import { RequestParams } from "../model/types/requestParams";
 import { AppError } from "../api/appError";
@@ -68,16 +68,16 @@ export const unwrapQueryResult = <
   TData,
   TErrorType extends AppErrorType = AppErrorType
 >(
-  result: Belt.Ok<TData> | Belt.Error<AppError<TErrorType>> | undefined,
+  result: Ok<TData> | BeltError<AppError<TErrorType>> | undefined
 ): QueryResult<TData, TErrorType> => {
   const queryResult: QueryResult<TData, TErrorType> = {};
 
   if (result === undefined) return queryResult;
 
-  if (Belt.R.isOk(result)) {
-    queryResult.data = Belt.R.getExn(result);
+  if (R.isOk(result)) {
+    queryResult.data = R.getExn(result);
   } else {
-    Belt.R.tapError(result, (error) => {
+    R.tapError(result, (error) => {
       queryResult.error = error;
     });
   }
