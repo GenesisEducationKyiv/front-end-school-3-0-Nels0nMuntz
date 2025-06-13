@@ -41,6 +41,7 @@ import { TracksPagination } from "./TracksPagination";
 import { ActionsMenu } from "./ActionsMenu";
 import TableSkeleton from "./TrackListSkeleton";
 import { useTracksData } from "../../lib/useTracksData";
+import { useSyncUrlParamsWithSettings } from "../../lib/useSyncUrlParamsWithSettings";
 
 type OnChangeFn<T> = (updaterOrValue: T | ((old: T) => T)) => void;
 
@@ -52,8 +53,12 @@ export const TrackList = () => {
   const pagination = usePagination();
   const rowSelection = useSelections();
   const { genresData, tracksData, isLoading } = useTracksData();
-  const { setSorting, setFilters, setPagination, setSelections } = useSettingsActions();
-  const { setTracks, setCurrentTrackIndex, setIsInitialized } = usePlaylistActions();
+  const { setSorting, setFilters, setPagination, setSelections } =
+    useSettingsActions();
+  const { setTracks, setCurrentTrackIndex, setIsInitialized } =
+    usePlaylistActions();
+  useSyncUrlParamsWithSettings();
+  
 
   useEffect(() => {
     if (tracksData?.data) {
@@ -100,9 +105,11 @@ export const TrackList = () => {
           if (!info.row.original.audioFile) {
             return <UploadTrackButton track={info.row.original} />;
           }
-          
+
           return (
-            <div className="flex gap-x-1.5" data-testid={`audio-player-${info.row.original.id}`}>
+            <div
+              className="flex gap-x-1.5"
+              data-testid={`audio-player-${info.row.original.id}`}>
               <PlayTrackButton track={info.row.original} />
               <DeleteFileButton trackId={info.row.original.id} />
             </div>
@@ -139,7 +146,9 @@ export const TrackList = () => {
         accessorKey: "genres",
         enableSorting: false,
         cell: (info) => (
-          <div className="max-w-48 whitespace-normal">{info.row.original.genres.join(", ")}</div>
+          <div className="max-w-48 whitespace-normal">
+            {info.row.original.genres.join(", ")}
+          </div>
         ),
       },
       {
@@ -160,32 +169,40 @@ export const TrackList = () => {
         ),
       },
     ],
-    [],
+    []
   );
 
   const handleSortingChange = useCallback<OnChangeFn<SortingState>>(
     (updaterOrValue) => {
-      setSorting(typeof updaterOrValue === "function" ? updaterOrValue(sorting) : updaterOrValue);
+      setSorting(
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(sorting)
+          : updaterOrValue
+      );
     },
-    [sorting, setSorting],
+    [sorting, setSorting]
   );
 
   const handlePaginationChange = useCallback<OnChangeFn<PaginationState>>(
     (updaterOrValue) => {
       setPagination(
-        typeof updaterOrValue === "function" ? updaterOrValue(pagination) : updaterOrValue,
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(pagination)
+          : updaterOrValue
       );
     },
-    [pagination, setPagination],
+    [pagination, setPagination]
   );
 
   const handleRowSelectionChange = useCallback<OnChangeFn<RowSelectionState>>(
     (updaterOrValue) => {
       setSelections(
-        typeof updaterOrValue === "function" ? updaterOrValue(rowSelection) : updaterOrValue,
+        typeof updaterOrValue === "function"
+          ? updaterOrValue(rowSelection)
+          : updaterOrValue
       );
     },
-    [rowSelection, setSelections],
+    [rowSelection, setSelections]
   );
 
   const table = useReactTable({
@@ -208,7 +225,9 @@ export const TrackList = () => {
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: handlePaginationChange,
     rowCount: tracksData?.meta?.total || 0,
-    pageCount: Math.ceil((tracksData?.meta?.total || 0) / (tracksData?.meta?.limit || 10)),
+    pageCount: Math.ceil(
+      (tracksData?.meta?.total || 0) / (tracksData?.meta?.limit || 10)
+    ),
     manualPagination: true,
 
     state: {
@@ -227,14 +246,15 @@ export const TrackList = () => {
   if (isLoading) return <TableSkeleton />;
 
   return (
-    <div className="flex flex-col gap-y-4 -ml-4 -mr-4" aria-disabled={isLoading ? "true" : "false"}>
+    <div
+      className="flex flex-col gap-y-4 -ml-4 -mr-4"
+      aria-disabled={isLoading ? "true" : "false"}>
       <Table className="border-separate border-spacing-x-0 border-spacing-y-3 px-4 pb-2">
         <TableHeader>
           {table.getHeaderGroups().map((header) => (
             <TableRow
               key={header.id}
-              className="bg-white hover:bg-white shadow-table rounded-xl overflow-hidden"
-            >
+              className="bg-white hover:bg-white shadow-table rounded-xl overflow-hidden">
               {header.headers.map((header, index) => {
                 const key = header.id;
                 return (
@@ -250,23 +270,28 @@ export const TrackList = () => {
                       "nth-6:w-[15%] nth-6:min-w-[15%] nth-6:max-w-[15%]",
                       "nth-7:w-[10%] nth-7:min-w-[10%] nth-7:max-w-[10%]",
                       "nth-8:w-[5%] nth-8:min-w-[5%] nth-8:max-w-[5%]",
-                    ])}
-                  >
+                    ])}>
                     {header.isPlaceholder ? null : (
                       <div
                         className={cn(
                           "flex items-center gap-x-0.5 select-none",
-                          index === 0 && "justify-center",
-                        )}
-                      >
+                          index === 0 && "justify-center"
+                        )}>
                         {filteringColumns.includes(key) && (
                           <TasksFilter
-                            testId={key === "genres" ? "filter-genre" : "filter-artist"}
+                            testId={
+                              key === "genres"
+                                ? "filter-genre"
+                                : "filter-artist"
+                            }
                             filter={filters[key as keyof typeof filters]}
                             title={`Filter by ${key}`}
                             options={key === "genres" ? genresData : []}
                             onChange={(value) => {
-                              setFilters({ ...filters, [key as keyof typeof filters]: value });
+                              setFilters({
+                                ...filters,
+                                [key as keyof typeof filters]: value,
+                              });
                               setSorting([]);
                               setPagination({
                                 pageIndex: 0,
@@ -278,19 +303,22 @@ export const TrackList = () => {
                         <button
                           onClick={() => toggleSort(header)}
                           className="flex items-center gap-x-2 hover:cursor-pointer group/sort"
-                          data-testid="sort-select"
-                        >
-                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          data-testid="sort-select">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                           {header.column.getIsSorted()
                             ? header.column.getIsSorted() === "asc"
                               ? " ↓"
                               : " ↑"
                             : null}
-                          {header.column.getCanSort() && !header.column.getIsSorted() && (
-                            <span className="text-xs text-muted-foreground opacity-0 group-hover/sort:opacity-100 transition-opacity">
-                              ↑↓
-                            </span>
-                          )}
+                          {header.column.getCanSort() &&
+                            !header.column.getIsSorted() && (
+                              <span className="text-xs text-muted-foreground opacity-0 group-hover/sort:opacity-100 transition-opacity">
+                                ↑↓
+                              </span>
+                            )}
                         </button>
                       </div>
                     )}
@@ -305,8 +333,7 @@ export const TrackList = () => {
             <TableRow
               key={row.id}
               className="bg-white hover:bg-white shadow-table rounded-xl overflow-hidden"
-              data-testid={`track-item-${row.id}`}
-            >
+              data-testid={`track-item-${row.id}`}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
@@ -320,8 +347,7 @@ export const TrackList = () => {
                     "nth-6:w-[15%] nth-6:min-w-[15%] nth-6:max-w-[15%]",
                     "nth-7:w-[10%] nth-7:min-w-[10%] nth-7:max-w-[10%]",
                     "nth-8:w-[5%] nth-8:min-w-[5%] nth-8:max-w-[5%]",
-                  ])}
-                >
+                  ])}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

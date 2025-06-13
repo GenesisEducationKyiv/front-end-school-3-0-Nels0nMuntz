@@ -1,24 +1,31 @@
 import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/shared/api";
-import { getTracks, GetTracksRequest, GetTracksResponse } from "@/entities/track";
+import { Result } from "@mobily/ts-belt";
+import { AppError, QUERY_KEYS } from "@/shared/api";
+import {
+  getTracks,
+  GetTracksRequest,
+  GetTracksResponse,
+} from "@/entities/track";
+import { TrackErrorType } from "@/entities/track/model/types/trackErrorType";
 
 interface Options extends GetTracksRequest {
-  queryOptions?: Partial<QueryObserverOptions<GetTracksResponse | undefined>>;
+  queryOptions?: Partial<
+    QueryObserverOptions<
+      Result<GetTracksResponse, AppError<TrackErrorType>> | undefined
+    >
+  >;
 }
 
 export const useTracksQuery = (options: Options) => {
   const {
-    data: tracksData,
+    data: tracksResult,
     isLoading: isLoadingTracks,
-    error: tracksError,
   } = useQuery({
     queryKey: [QUERY_KEYS.tracks, options],
     queryFn: () => {
       let params: GetTracksRequest = {};
       if (options.search) {
         params.search = options.search;
-      } else if (options?.filters?.artist || options?.filters?.genre) {
-        params.filters = options.filters;
       } else {
         params = options;
       }
@@ -27,8 +34,7 @@ export const useTracksQuery = (options: Options) => {
     ...options?.queryOptions,
   });
   return {
-    tracksData,
+    tracksResult,
     isLoadingTracks,
-    tracksError,
   };
 };

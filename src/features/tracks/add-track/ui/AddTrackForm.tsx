@@ -1,6 +1,8 @@
-import { useGenresQuery } from "@/entities/genres";
+import { toast } from "sonner";
+import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
 import { CreateTrackRequest } from "@/entities/track";
 import { TrackForm } from "@/shared/ui";
+import { unwrapQueryResult } from "@/shared/lib";
 import { useAddTrackMutation } from "../api/useAddTrackMutation";
 
 interface Props {
@@ -8,7 +10,8 @@ interface Props {
 }
 
 export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
-  const { genresData = [] } = useGenresQuery();
+  const { genresResult } = useGenresQuery();
+  const { data = [], error } = unwrapQueryResult(genresResult);
   const { mutate, isPending } = useAddTrackMutation({ onSuccess: onSubmitted });
   const handleSubmit = (values: CreateTrackRequest) => {
     mutate({
@@ -19,10 +22,15 @@ export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
       genres: values.genres,
     });
   };
+
+  if (error) {
+    toast.error(GENRE_API_ERROR_MESSAGES[error.type]);
+  }
+
   return (
     <TrackForm
       onSubmit={handleSubmit}
-      genres={genresData}
+      genres={data}
       isSubmitting={isPending}
       // actions={
       //   <DialogFooter className="sm:justify-end">

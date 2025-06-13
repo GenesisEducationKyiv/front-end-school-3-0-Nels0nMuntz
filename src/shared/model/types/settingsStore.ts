@@ -1,6 +1,6 @@
 import { PaginationState, RowSelectionState, SortingState } from "@tanstack/react-table";
 
-interface FiltersState {
+export interface FiltersState {
   artist: string;
   genres: string;
 }

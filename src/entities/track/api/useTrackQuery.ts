@@ -1,14 +1,18 @@
-import { QUERY_KEYS } from "@/shared/api";
+import { Result } from "@mobily/ts-belt";
+import { AppError, QUERY_KEYS } from "@/shared/api";
 import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
 import { getTrack } from "./getTrack";
 import { Track } from "../model/types/track";
+import { TrackErrorType } from "../model/types/trackErrorType";
 
 interface Options {
   slug: string;
-  queryOptions?: Partial<QueryObserverOptions<Track | undefined>>;
+  queryOptions?: Partial<
+    QueryObserverOptions<Result<Track, AppError<TrackErrorType>> | undefined>
+  >;
 }
 
-export const useTrackQuery = ({slug, queryOptions}: Options) => {
+export const useTrackQuery = ({ slug, queryOptions }: Options) => {
   const {
     data: trackData,
     error: trackError,

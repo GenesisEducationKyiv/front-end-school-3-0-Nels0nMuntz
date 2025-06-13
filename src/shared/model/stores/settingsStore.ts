@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { SettingsStore } from "../types/settingsStore";
 import { PAGINATION_PAGE_SIZE } from "@/shared/lib";
+import { PAGINATION_MIN_INDEX } from "@/shared/lib/constants";
 
 const settingsStore = create<SettingsStore>()((set) => ({
   sorting: [],
   pagination: {
-    pageIndex: 0,
+    pageIndex: PAGINATION_MIN_INDEX,
     pageSize: PAGINATION_PAGE_SIZE,
   },
   selections: {},

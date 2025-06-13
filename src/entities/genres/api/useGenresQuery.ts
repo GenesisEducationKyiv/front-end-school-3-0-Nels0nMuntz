@@ -4,8 +4,7 @@ import { getGenres } from "./getGenres";
 
 export const useGenresQuery = () => {
   const {
-    data: genresData,
-    error: genresError,
+    data: genresResult,
     isLoading: isLoadingGenres,
   } = useQuery({
     queryKey: [QUERY_KEYS.genres],
@@ -13,8 +12,7 @@ export const useGenresQuery = () => {
     staleTime: 1000 * 60 * 15,
   });
   return {
-    genresData,
-    genresError,
+    genresResult,
     isLoadingGenres,
   };
 };

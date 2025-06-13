@@ -1,15 +1,19 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { ApiError } from "../model";
+import { Ok, Error as BeltError, R } from "@mobily/ts-belt";
+import { ApiError, AppErrorType, QueryResult } from "../model";
 import { RequestParams } from "../model/types/requestParams";
+import { AppError } from "../api/appError";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export const isApiError = (response: unknown): response is ApiError => {
-  return response !== null && typeof response === "object" &&  "error" in response;
+  return (
+    response !== null && typeof response === "object" && "error" in response
+  );
 };
 
 export const isFormData = (data: unknown): data is FormData => {
@@ -58,4 +62,25 @@ export const parseApiResponse = <T>(
     }
     throw error;
   }
-}
+};
+
+export const unwrapQueryResult = <
+  TData,
+  TErrorType extends AppErrorType = AppErrorType
+>(
+  result: Ok<TData> | BeltError<AppError<TErrorType>> | undefined
+): QueryResult<TData, TErrorType> => {
+  const queryResult: QueryResult<TData, TErrorType> = {};
+
+  if (result === undefined) return queryResult;
+
+  if (R.isOk(result)) {
+    queryResult.data = R.getExn(result);
+  } else {
+    R.tapError(result, (error) => {
+      queryResult.error = error;
+    });
+  }
+
+  return queryResult;
+};
