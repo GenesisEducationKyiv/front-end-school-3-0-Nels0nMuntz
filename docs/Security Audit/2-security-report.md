@@ -1,5 +1,7 @@
 # Security Audit Report
 
+### Date: 15.06.2025
+
 ### 1. Git Tracking of Dependencies
 
 **Check**: Ensure `package-lock.json` is committed to git and not ignored by `.gitignore`.
@@ -54,8 +56,14 @@ One alert was detected regarding the `vite` version and has been resolved by upd
   - High usage (~132k downloads/week)
   - **No critical issues**, consider replacing in future
 
+### 5. Enable Socket.dev
 
-## 5. Manual Package Review
+Socket.dev was enabled and used to analyze the project dependencies for suspicious or risky behavior.
+
+**Result**: No alerts were retrieved, indicating that no suspicious activity was detected in the scanned packages.
+
+
+## 6. Manual Package Review
 
 **Check**: Manually verify package metadata:
 
@@ -70,12 +78,16 @@ One alert was detected regarding the `vite` version and has been resolved by upd
 
 
 
-## 6. Absence of Zero-Day Vulnerabilities
+## 7. Absence of Zero-Day Vulnerabilities
 
-Using GitHub Dependabot helps detect zero-day vulnerabilities at an early stage.  
+To detect and mitigate zero-day vulnerabilities, the following measures were implemented:
+
+1. Dependabot security updates were enabled. It automatically alerts about known CVEs and outdated dependencies.
+2. Snyk was used to scan for known vulnerabilities, continuously monitor dependencies.
+3. Socket.dev was used to detect malware, unexpected code behavior, and supply chain attacks, which is often linked to zero-day issues
 
 
-## 7. Access Token Privileges (Principle of Least Privilege)
+## 8. Access Token Privileges (Principle of Least Privilege)
 
 **Check**: Review access tokens and their permission scope.
 
@@ -84,7 +96,7 @@ Using GitHub Dependabot helps detect zero-day vulnerabilities at an early stage.
 
 ---
 
-## 8. Subresource Integrity (SRI)
+## 9. Subresource Integrity (SRI)
 
 **Check**: Verify if external resources (e.g., via CDN) use Subresource Integrity.
 
@@ -93,7 +105,7 @@ Using GitHub Dependabot helps detect zero-day vulnerabilities at an early stage.
 
 ---
 
-## 9. Content Security Policy
+## 10. Content Security Policy
 
 **Check**: Ensure a CSP is configured to restrict external resources.
 
