@@ -7,7 +7,9 @@
     "start": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -42,6 +44,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@playwright/experimental-ct-react": "^1.53.1",
+    "@playwright/test": "^1.53.1",
     "@tanstack/eslint-plugin-query": "^5.73.3",
     "@types/node": "^22.14.1",
     "@types/react": "^18.3.1",
@@ -51,8 +55,10 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "msw": "^2.10.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.2.3"
   }
 }
