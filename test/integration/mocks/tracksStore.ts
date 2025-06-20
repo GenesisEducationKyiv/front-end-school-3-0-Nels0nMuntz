@@ -1,4 +1,4 @@
-import { Track } from "../../../src/entities/track/model/types/track";
+import { Track } from "../../src/entities/track/model/types/track";
 
 const tracks = [] as Track[];
 

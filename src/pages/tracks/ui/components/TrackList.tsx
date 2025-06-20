@@ -140,13 +140,18 @@ export const TrackList = () => {
         header: "Album",
         accessorKey: "album",
         enableSorting: true,
+        cell: (info) => (
+          <span data-testid={`track-item-${info.row.original.id}-album`}>
+            {info.row.original.album}
+          </span>
+        ),
       },
       {
         header: "Genres",
         accessorKey: "genres",
         enableSorting: false,
         cell: (info) => (
-          <div className="max-w-48 whitespace-normal">
+          <div className="max-w-48 whitespace-normal" data-testid={`track-item-${info.row.original.id}-genres`}>
             {info.row.original.genres.join(", ")}
           </div>
         ),
