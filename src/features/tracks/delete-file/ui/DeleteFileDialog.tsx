@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,22 +15,19 @@ import { useDeleteFileMutation } from "../api/useDeleteFileMutation";
 
 interface Props extends PropsWithChildren {
   trackId: string;
-  open: boolean;
-  onOpenChange: (value: boolean) => void;
-  onDeleted: () => void;
 }
 
 export const DeleteFileDialog: React.FC<Props> = ({
   trackId,
-  open,
   children,
-  onOpenChange,
-  onDeleted,
 }) => {
-  const { mutate, isPending } = useDeleteFileMutation({ onSuccess: onDeleted });
+
+  const [open, setOpen] = useState(false);
+  const closeDialog = () => setOpen(false);
+  const { mutate, isPending } = useDeleteFileMutation({ onSuccess: closeDialog });
   const handleDelete = () => mutate(trackId);
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
