@@ -5,11 +5,6 @@ import {
   usePlaylistIsPlaying,
   usePlaylistDirection,
   usePlaylistActions,
-  usePlaylistIsInitialized,
-  usePlayerIsReady,
-  usePlayerBuffered,
-  usePlayerDuration,
-  usePlayerCurrentProgress,
   usePlayerActions,
 } from "@/shared/model";
 
@@ -18,19 +13,9 @@ export const useAudioPlayerData = () => {
   const isPlaying = usePlaylistIsPlaying();
   const currentTrackIndex = usePlaylistCurrentTrackIndex();
   const direction = usePlaylistDirection();
-  const isInitialized = usePlaylistIsInitialized();
-  const isReady = usePlayerIsReady();
-  const buffered = usePlayerBuffered();
-  const duration = usePlayerDuration();
-  const currrentProgress = usePlayerCurrentProgress();
-  const {
-    setCurrentTrackIndex,
-    setIsPlaying,
-    setDirection,
-    setAudioControl,
-    playTrackFromQueue,
-  } = usePlaylistActions();
-  const { setIsReady, setDuration, setBuffered, setCurrentProgress } =
+  const { setCurrentTrackIndex, setDirection, playTrackFromQueue } =
+    usePlaylistActions();
+  const { setBuffered, setCurrentProgress, setAudioControl } =
     usePlayerActions();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -124,24 +109,14 @@ export const useAudioPlayerData = () => {
   };
 
   return {
-    isInitialized,
     currentTrack,
     hasPrevious,
     hasNext,
-    isReady,
-    duration,
-    currrentProgress,
-    buffered,
     audioRef,
-    isPlaying,
-    setCurrentProgress,
-    setDuration,
-    setIsReady,
     handleBufferProgress,
     playPrev,
     playNext,
     togglePlay,
-    setIsPlaying,
     handleError,
   };
 };

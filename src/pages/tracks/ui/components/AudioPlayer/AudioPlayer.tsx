@@ -10,31 +10,40 @@ import { useAudioPlayerData } from "@/pages/tracks/lib/useAudioPlayerData";
 import AudioProgressBar from "./AudioProgressBar";
 import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib";
-import { AudioPlayerSkeleton } from "./AudioPlayerSkeleton";
 import { API_BASE_URL } from "@/shared/configs";
+import { 
+  usePlaylistIsInitialized, 
+  usePlayerIsReady,
+  usePlaylistIsPlaying, 
+  usePlaylistActions, 
+  usePlayerActions,
+} from "@/shared/model";
+import { AudioPlayerSkeleton } from "./AudioPlayerSkeleton";
 
 export const AudioPlayer = () => {
+  const isInitialized = usePlaylistIsInitialized();
+  const isReady = usePlayerIsReady();
+  const isPlaying = usePlaylistIsPlaying();
+  const { setIsPlaying } = usePlaylistActions();
+  const { setIsReady, setDuration, setCurrentProgress } = usePlayerActions();
+
   const {
-    isInitialized,
     currentTrack,
     hasPrevious,
     hasNext,
-    isReady,
-    duration,
-    currrentProgress,
-    buffered,
     audioRef,
-    isPlaying,
-    setCurrentProgress,
-    setDuration,
-    setIsReady,
     handleBufferProgress,
     playPrev,
     playNext,
     togglePlay,
-    setIsPlaying,
     handleError,
   } = useAudioPlayerData();
+
+  const handlleProgressBarChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = e.currentTarget.valueAsNumber;
+    setCurrentProgress(e.currentTarget.valueAsNumber);
+  };
 
   if (!isInitialized) {
     return <AudioPlayerSkeleton />;
@@ -72,18 +81,7 @@ export const AudioPlayer = () => {
       {formatTime(currentTime)} / {formatTime(duration)}
     </div> */}
       <div className="my-4 w-full max-w-60 h-3 relative">
-        <AudioProgressBar
-          duration={duration}
-          currentProgress={currrentProgress}
-          buffered={buffered}
-          onChange={(e) => {
-            if (!audioRef.current) return;
-
-            audioRef.current.currentTime = e.currentTarget.valueAsNumber;
-
-            setCurrentProgress(e.currentTarget.valueAsNumber);
-          }}
-        />
+        <AudioProgressBar onChange={handlleProgressBarChange} />
       </div>
       <div className="flex items-center gap-x-2 mt-2 p-3 rounded-xl bg-background-accent border border-primary">
         <Button

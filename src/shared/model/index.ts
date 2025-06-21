@@ -24,7 +24,6 @@ export {
   usePlaylistTracks,
   usePlaylistDirection,
   usePlaylistIsInitialized,
-  usePlaylistAudioControl,
   usePlaylistQueue,
 } from "./stores/playlistStore";
 
@@ -33,6 +32,7 @@ export {
   usePlayerDuration,
   usePlayerCurrentProgress,
   usePlayerBuffered,
+  usePlayerAudioControl,
   usePlayerActions,
 } from "./stores/playerStore";
 
