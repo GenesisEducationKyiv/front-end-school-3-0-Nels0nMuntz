@@ -28,5 +28,13 @@ export {
   usePlaylistQueue,
 } from "./stores/playlistStore";
 
+export {
+  usePlayerIsReady,
+  usePlayerDuration,
+  usePlayerCurrentProgress,
+  usePlayerBuffered,
+  usePlayerActions,
+} from "./stores/playerStore";
+
 export { sortKeySchema } from "./schemas/sortKeySchema";
 export { sortOrderSchema } from "./schemas/sortOrderSchema";

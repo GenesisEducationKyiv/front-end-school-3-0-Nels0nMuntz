@@ -25,7 +25,7 @@ export const AudioPlayer = () => {
     buffered,
     audioRef,
     isPlaying,
-    setCurrrentProgress,
+    setCurrentProgress,
     setDuration,
     setIsReady,
     handleBufferProgress,
@@ -81,7 +81,7 @@ export const AudioPlayer = () => {
 
             audioRef.current.currentTime = e.currentTarget.valueAsNumber;
 
-            setCurrrentProgress(e.currentTarget.valueAsNumber);
+            setCurrentProgress(e.currentTarget.valueAsNumber);
           }}
         />
       </div>
@@ -135,7 +135,7 @@ export const AudioPlayer = () => {
           }}
           onError={handleError}
           onTimeUpdate={(e) => {
-            setCurrrentProgress(e.currentTarget.currentTime);
+            setCurrentProgress(e.currentTarget.currentTime);
             handleBufferProgress(e);
           }}
           onProgress={handleBufferProgress}
