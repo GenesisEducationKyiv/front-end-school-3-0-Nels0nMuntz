@@ -27,14 +27,14 @@ test.describe("Add a track", () => {
     await expect(page.getByTestId("track-form")).toBeVisible();
 
     // Verify taht the title field is focused
-    const titleInput = page.getByRole("textbox", { name: "title" });
+    const titleInput = page.getByTestId("input-title");
     await expect(titleInput).toBeFocused();
 
     // Fill in the form fields
     await titleInput.fill(trackData.title);
     await expect(titleInput).toHaveValue(trackData.title);
 
-    const artistInput = page.getByRole("textbox", { name: "artist" });
+    const artistInput = page.getByTestId("input-artist");
     await artistInput.fill(trackData.artist);
     await expect(artistInput).toHaveValue(trackData.artist);
 
@@ -46,9 +46,9 @@ test.describe("Add a track", () => {
     );
 
     // Loose focus from the genres input to close the dropdown
-    await page.getByRole("textbox", { name: "artist" }).click();
+    await artistInput.click();
 
-    const albumInput = page.getByRole("textbox", { name: "album" });
+    const albumInput = page.getByTestId("input-album");
     await albumInput.fill(trackData.album);
     await expect(albumInput).toHaveValue(trackData.album);
 
