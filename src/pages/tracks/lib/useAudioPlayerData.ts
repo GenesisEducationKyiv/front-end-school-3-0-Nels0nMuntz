@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   usePlaylistCurrentTrackIndex,
   usePlaylistTracks,
   usePlaylistIsPlaying,
   usePlaylistDirection,
   usePlaylistActions,
-  usePlaylistIsInitialized,
+  usePlayerActions,
 } from "@/shared/model";
 
 export const useAudioPlayerData = () => {
@@ -13,14 +13,10 @@ export const useAudioPlayerData = () => {
   const isPlaying = usePlaylistIsPlaying();
   const currentTrackIndex = usePlaylistCurrentTrackIndex();
   const direction = usePlaylistDirection();
-  const isInitialized = usePlaylistIsInitialized();
-  const { setCurrentTrackIndex, setIsPlaying, setDirection, setAudioControl, playTrackFromQueue } =
+  const { setCurrentTrackIndex, setDirection, playTrackFromQueue } =
     usePlaylistActions();
-
-  const [isReady, setIsReady] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currrentProgress, setCurrrentProgress] = useState(0);
-  const [buffered, setBuffered] = useState(0);
+  const { setBuffered, setCurrentProgress, setAudioControl } =
+    usePlayerActions();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentTrack = tracks[currentTrackIndex];
@@ -62,7 +58,7 @@ export const useAudioPlayerData = () => {
   };
 
   const playNext = () => {
-    setCurrrentProgress(0);
+    setCurrentProgress(0);
     if (hasNext) {
       setCurrentTrackIndex(currentTrackIndex + 1);
       setDirection("forward");
@@ -73,7 +69,7 @@ export const useAudioPlayerData = () => {
   };
 
   const playPrev = () => {
-    setCurrrentProgress(0);
+    setCurrentProgress(0);
     if (hasPrevious) {
       setCurrentTrackIndex(currentTrackIndex - 1);
       setDirection("backward");
@@ -91,13 +87,20 @@ export const useAudioPlayerData = () => {
     }
   };
 
-  const handleBufferProgress: React.ReactEventHandler<HTMLAudioElement> = (e) => {
+  const handleBufferProgress: React.ReactEventHandler<HTMLAudioElement> = (
+    e
+  ) => {
     const audio = e.currentTarget;
     const dur = audio.duration;
     if (dur > 0) {
       for (let i = 0; i < audio.buffered.length; i++) {
-        if (audio.buffered.start(audio.buffered.length - 1 - i) < audio.currentTime) {
-          const bufferedLength = audio.buffered.end(audio.buffered.length - 1 - i);
+        if (
+          audio.buffered.start(audio.buffered.length - 1 - i) <
+          audio.currentTime
+        ) {
+          const bufferedLength = audio.buffered.end(
+            audio.buffered.length - 1 - i
+          );
           setBuffered(bufferedLength);
           break;
         }
@@ -106,24 +109,14 @@ export const useAudioPlayerData = () => {
   };
 
   return {
-    isInitialized,
     currentTrack,
     hasPrevious,
     hasNext,
-    isReady,
-    duration,
-    currrentProgress,
-    buffered,
     audioRef,
-    isPlaying,
-    setCurrrentProgress,
-    setDuration,
-    setIsReady,
     handleBufferProgress,
     playPrev,
     playNext,
     togglePlay,
-    setIsPlaying,
     handleError,
   };
 };

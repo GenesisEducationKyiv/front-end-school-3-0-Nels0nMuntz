@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
-import { TRACk_API_ERROR_MESSAGES } from "@/entities/track";
+import { TRACk_API_ERROR_MESSAGES, useTracksQuery } from "@/entities/track";
 import {
   SortKey,
   useFilters,
@@ -11,7 +11,6 @@ import {
   useSorting,
 } from "@/shared/model";
 import { unwrapQueryResult, useDebounce } from "@/shared/lib";
-import { useTracksQuery } from "../api/useTracksQuery";
 
 export const useTracksData = () => {
   const sorting = useSorting();

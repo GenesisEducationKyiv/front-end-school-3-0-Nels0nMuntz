@@ -1,12 +1,10 @@
-import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
 import { Result } from "@mobily/ts-belt";
+import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
 import { AppError, QUERY_KEYS } from "@/shared/api";
-import {
-  getTracks,
-  GetTracksRequest,
-  GetTracksResponse,
-} from "@/entities/track";
-import { TrackErrorType } from "@/entities/track/model/types/trackErrorType";
+import { GetTracksRequest } from "../model/types/getTracksRequest";
+import { GetTracksResponse } from "../model/types/getTracksResponse";
+import { TrackErrorType } from "../model/types/trackErrorType";
+import { getTracks } from "./getTracks";
 
 interface Options extends GetTracksRequest {
   queryOptions?: Partial<
@@ -17,10 +15,7 @@ interface Options extends GetTracksRequest {
 }
 
 export const useTracksQuery = (options: Options) => {
-  const {
-    data: tracksResult,
-    isLoading: isLoadingTracks,
-  } = useQuery({
+  const { data: tracksResult, isLoading: isLoadingTracks } = useQuery({
     queryKey: [QUERY_KEYS.tracks, options],
     queryFn: () => {
       let params: GetTracksRequest = {};

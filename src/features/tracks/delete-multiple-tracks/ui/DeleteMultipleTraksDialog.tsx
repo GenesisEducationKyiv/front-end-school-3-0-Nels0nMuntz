@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useSelections } from "@/shared/model";
 import {
@@ -20,16 +20,11 @@ import {
   useSettingsActions
 } from "@/shared/model";
 
-interface Props extends PropsWithChildren {
-  open: boolean;
-  onOpenChange: (value: boolean) => void;
-}
 
-export const DeleteMultipleTracksDialog: React.FC<Props> = ({
-  open,
+export const DeleteMultipleTracksDialog: React.FC<PropsWithChildren> = ({
   children,
-  onOpenChange,
 }) => {
+  const [open, setOpen] = useState(false);
   const tracks = usePlaylistTracks();
   const trackIndex = usePlaylistCurrentTrackIndex();
   const { pushTrackToQueue } = usePlaylistActions();
@@ -39,7 +34,7 @@ export const DeleteMultipleTracksDialog: React.FC<Props> = ({
   
   const onDeleted = () => {
     setSelections({});
-    onOpenChange(false);
+    setOpen(false);
   }
 
   const { mutate, isPending } = useDeleteMultipleTracksMutation({ onSuccess: onDeleted });
@@ -60,7 +55,7 @@ export const DeleteMultipleTracksDialog: React.FC<Props> = ({
     mutate(trackIds);
   };
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

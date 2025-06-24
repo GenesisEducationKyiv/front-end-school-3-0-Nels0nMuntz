@@ -10,36 +10,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui";
+import { Track } from "@/entities/track";
+import { usePlaylistActions } from "@/shared/model";
 import { UploadTrackDropzone } from "./UploadTrackDropzone";
 import { useUploadAudioFileMutation } from "../api/useUploadAudioFileMutation";
-import { Track } from "@/entities/track";
 
 interface Props extends PropsWithChildren {
   trackId: string;
-  open: boolean;
-  onOpenChange: (value: boolean) => void;
-  onSuccess: (track: Track) => void;
 }
 
-export const UploadTrackDialog: React.FC<Props> = ({
-  trackId,
-  open,
-  children,
-  onOpenChange,
-  onSuccess,
-}) => {
+export const UploadTrackDialog: React.FC<Props> = ({ trackId, children }) => {
+  const { pushTrackToQueue } = usePlaylistActions();
+  const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const onUploaded = (track: Track) => {
-    onOpenChange(false);
-    onSuccess(track);
+    setOpen(false);
+    pushTrackToQueue(track);
   };
-  const { mutate, isPending } = useUploadAudioFileMutation({ onSuccess: onUploaded });
+  const { mutate, isPending } = useUploadAudioFileMutation({
+    onSuccess: onUploaded,
+  });
   const handleUpload = () => {
     if (!file) return;
     mutate({ file, trackId });
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -57,8 +53,7 @@ export const UploadTrackDialog: React.FC<Props> = ({
             variant="default"
             disabled={isPending || !file}
             className="min-w-24"
-            onClick={handleUpload}
-          >
+            onClick={handleUpload}>
             {isPending ? <Loader2 className="animate-spin" /> : "Create"}
           </Button>
         </DialogFooter>

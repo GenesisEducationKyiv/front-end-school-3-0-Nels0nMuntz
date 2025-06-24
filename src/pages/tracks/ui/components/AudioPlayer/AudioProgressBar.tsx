@@ -1,16 +1,14 @@
+import { usePlayerBuffered, usePlayerDuration, usePlayerCurrentProgress } from "@/shared/model";
+
 interface ProgressCSSProps extends React.CSSProperties {
   "--progress-width": number;
   "--buffered-width": number;
 }
 
-interface AudioProgressBarProps extends React.ComponentPropsWithoutRef<"input"> {
-  duration: number;
-  currentProgress: number;
-  buffered: number;
-}
-
-export default function AudioProgressBar(props: AudioProgressBarProps) {
-  const { duration, currentProgress, buffered, ...rest } = props;
+export default function AudioProgressBar(props: React.ComponentPropsWithoutRef<"input">) {
+  const buffered = usePlayerBuffered();
+  const duration = usePlayerDuration();
+  const currentProgress = usePlayerCurrentProgress();
 
   const progressBarWidth = isNaN(currentProgress / duration) ? 0 : currentProgress / duration;
   const bufferedWidth = isNaN(buffered / duration) ? 0 : buffered / duration;
@@ -31,7 +29,7 @@ export default function AudioProgressBar(props: AudioProgressBarProps) {
         max={duration}
         value={currentProgress}
         data-testid="audio-progress"
-        {...rest}
+        {...props}
       />
     </div>
   );

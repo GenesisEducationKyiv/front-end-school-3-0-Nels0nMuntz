@@ -8,7 +8,6 @@ interface PlaylistState {
   direction: PlayDirection;
   isPlaying: boolean;
   isInitialized: boolean;
-  audioControl: HTMLAudioElement | null;
   queue: Track[];
 }
 
@@ -19,7 +18,6 @@ interface PlaylistActions {
     setIsPlaying: (isPlaying: boolean) => void;
     setDirection: (direction: PlayDirection) => void;
     setIsInitialized: (isInitialized: boolean) => void;
-    setAudioControl: (audioControl: HTMLAudioElement | null) => void;
     pushTrackToQueue: (track: Track) => void;
     playTrackFromQueue: () => void;
   };
