@@ -5,7 +5,7 @@ import { FilterFormValues } from "../model/types/filterFormValues";
 import { Button, Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
 import { ListFilter, ListFilterPlus } from "lucide-react";
 
-interface Props {
+export interface TasksFilterProps {
   testId?: string;
   title: string;
   filter: string;
@@ -13,7 +13,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export const TasksFilter: React.FC<Props> = ({ testId, title, filter, options, onChange }) => {
+export const TasksFilter: React.FC<TasksFilterProps> = ({ testId, title, filter, options, onChange }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -33,9 +33,17 @@ export const TasksFilter: React.FC<Props> = ({ testId, title, filter, options, o
       <PopoverTrigger asChild>
         <Button variant="ghost" className="cursor-pointer" onClick={handleOpen} data-testid={testId}>
           {filter ? (
-            <ListFilter size={16} className="text-foreground" />
+            <ListFilter 
+              size={16} 
+              className="text-foreground" 
+              data-testid={`${testId}-icon`}
+            />
           ) : (
-            <ListFilterPlus size={16} className="text-muted-foreground" />
+            <ListFilterPlus 
+              size={16} 
+              className="text-muted-foreground" 
+              data-testid={`${testId}-plus-icon`}
+            />
           )}
           <span className="sr-only">{title}</span>
         </Button>

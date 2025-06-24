@@ -1,4 +1,5 @@
 export { TasksFilter } from "./filter-tracks/ui/TasksFilter";
+export type { TasksFilterProps } from "./filter-tracks/ui/TasksFilter";
 export { useFilters, useFilterActions } from "./filter-tracks/model/store/fiterStore";
 
 export { SearchInput } from "./search-tracks/ui/SearchInput";
