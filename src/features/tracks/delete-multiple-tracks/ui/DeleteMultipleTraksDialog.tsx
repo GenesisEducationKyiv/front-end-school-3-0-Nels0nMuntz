@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
   Button,
 } from "@/shared/ui";
-import { useDeleteMultipleTracksMutation } from "../api/useDeleteMultipleTracksMutation";
+import { useDeleteMultipleTracksApolloMutation } from "../api/useDeleteMultipleTracksApolloMutation";
 import {
   usePlaylistCurrentTrackIndex,
   usePlaylistTracks,
@@ -42,7 +42,7 @@ export const DeleteMultipleTracksDialog: React.FC<Props> = ({
     onOpenChange(false);
   }
 
-  const { mutate, isPending } = useDeleteMultipleTracksMutation({ onSuccess: onDeleted });
+  const { mutate, isPending } = useDeleteMultipleTracksApolloMutation({ onSuccess: onDeleted });
   const handleDelete = () => {
     const currentTrack = tracks[trackIndex];
     if (!currentTrack) {
