@@ -4,6 +4,8 @@ export type { GetTracksResponse } from "./model/types/getTracksResponse";
 export type { CreateTrackRequest } from "./model/types/createTrackRequest";
 export type { EditTrackRequest } from "./model/types/edittrackRequest";
 
+export { GET_TRACKS } from "./api/queries/getTracksQuery";
+
 export { getTracks } from "./api/getTracks";
 export { createTrack } from "./api/createTrack";
 export { updateTrack } from "./api/updateTrack";

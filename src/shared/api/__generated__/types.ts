@@ -132,3 +132,10 @@ export type TracksQueryVariables = Exact<{
 
 
 export type TracksQuery = { __typename?: 'Query', tracks: { __typename?: 'TracksResponse', data: Array<{ __typename?: 'Track', id: string, title: string, artist: string, album?: string | null, genres: Array<string>, slug: string, coverImage?: string | null, audioFile?: string | null, createdAt: string, updatedAt: string }>, meta: { __typename?: 'TracksMeta', total: number, page: number, limit: number, totalPages: number } } };
+
+export type AddTrackMutationVariables = Exact<{
+  input: CreateTrackInput;
+}>;
+
+
+export type AddTrackMutation = { __typename?: 'Mutation', addTrack: { __typename?: 'Track', updatedAt: string, title: string, slug: string, id: string, genres: Array<string>, createdAt: string, coverImage?: string | null, audioFile?: string | null, artist: string, album?: string | null } };

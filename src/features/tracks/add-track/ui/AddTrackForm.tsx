@@ -2,8 +2,8 @@ import { toast } from "sonner";
 import { GENRE_API_ERROR_MESSAGES, useGenresApolloQuery } from "@/entities/genres";
 import { TrackForm } from "@/shared/ui";
 import { unwrapQueryResult } from "@/shared/lib";
-import { useAddTrackMutation } from "../api/useAddTrackMutation";
 import { TrackFormValues } from "@/shared/model";
+import { useAddTrackApolloMutation } from "../api/useAddTrackApolloMutation";
 
 interface Props {
   onSubmitted: () => void;
@@ -12,7 +12,7 @@ interface Props {
 export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
   const { data: genresResult } = useGenresApolloQuery();
   const { data = [], error } = unwrapQueryResult(genresResult);
-  const { mutate, isPending } = useAddTrackMutation({ onSuccess: onSubmitted });
+  const { mutate, isPending } = useAddTrackApolloMutation({ onSuccess: onSubmitted });
   const handleSubmit = (values: TrackFormValues) => {
     mutate({
       title: values.title.trim(),

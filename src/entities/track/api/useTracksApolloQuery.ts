@@ -1,37 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { R } from "@mobily/ts-belt";
-import { AppError, gql } from "@/shared/api";
+import { AppError } from "@/shared/api";
 import { safeParseApiResponse } from "@/shared/lib";
 import { GetTracksRequest } from "../model/types/getTracksRequest";
 import { getTracksResponseSchema } from "../model/schemas/getTracksResponseSchema";
 import { TrackErrorType } from "../model/types/trackErrorType";
 import { ApolloQueryResult } from "@/shared/model";
 import { GetTracksResponse } from "../model/types/getTracksResponse";
-
-export const TRACKS = gql(`
-query Tracks($params: TracksInput) {
-  tracks(params: $params) {
-    data {
-      id
-      title
-      artist
-      album
-      genres
-      slug
-      coverImage
-      audioFile
-      createdAt
-      updatedAt
-    }
-    meta {
-      total
-      page
-      limit
-      totalPages
-    }
-  }
-}
-`);
+import { GET_TRACKS } from "./queries/getTracksQuery";
 
 export const useTracksApolloQuery = ({
   filters,
@@ -39,7 +15,7 @@ export const useTracksApolloQuery = ({
   search,
   sorting,
 }: GetTracksRequest): ApolloQueryResult<GetTracksResponse> => {
-  const { data, loading, error } = useQuery(TRACKS, {
+  const { data, loading, error } = useQuery(GET_TRACKS, {
     variables: {
       params: {
         ...(search
