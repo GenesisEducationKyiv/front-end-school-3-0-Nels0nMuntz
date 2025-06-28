@@ -63,6 +63,11 @@ export type TracksResponse = {
   meta: TracksMeta;
 };
 
+export type GenresQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GenresQuery = { __typename?: 'Query', getAllGenres: Array<string> };
+
 export type TracksQueryVariables = Exact<{
   params?: InputMaybe<TracksInput>;
 }>;

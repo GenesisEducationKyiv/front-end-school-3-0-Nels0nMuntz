@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
+import { GENRE_API_ERROR_MESSAGES, useGenresApolloQuery } from "@/entities/genres";
 import { TRACK_API_ERROR_MESSAGES, useTracksApolloQuery } from "@/entities/track";
 import {
   SortKey,
@@ -20,7 +20,7 @@ export const useTracksData = () => {
   const debouncedSearchText = useDebounce(searchText, 500);
   const { setSorting, setFilters, setPagination, setIsSearching } =
     useSettingsActions();
-  const { genresResult, isLoadingGenres } = useGenresQuery();
+  const { data: genresResult, loading: isLoadingGenres } = useGenresApolloQuery();
   const { data: tracksResult, loading: isLoadingTracks } = useTracksApolloQuery({
     pagination,
     sorting: {
@@ -67,7 +67,7 @@ export const useTracksData = () => {
     toast.error(TRACK_API_ERROR_MESSAGES[tracksError.type as keyof typeof TRACK_API_ERROR_MESSAGES]);
   }
   if (genresError) {
-    toast.error(GENRE_API_ERROR_MESSAGES[genresError.type]);
+    toast.error(GENRE_API_ERROR_MESSAGES[genresError.type as keyof typeof GENRE_API_ERROR_MESSAGES]);
   }
 
   const isLoading = isLoadingTracks || isLoadingGenres;

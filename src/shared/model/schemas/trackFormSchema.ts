@@ -18,6 +18,7 @@ export const trackFormSchema = z.object({
       message: "Only letters, numbers, spaces, and common symbols are allowed",
     })
     .optional()
+    .nullable()
     .or(z.literal("")),
   genres: z
     .array(z.object({ label: z.string(), value: z.string() }))
@@ -27,5 +28,6 @@ export const trackFormSchema = z.object({
     .string()
     .url({ message: "Cover image must be a valid URL." })
     .optional()
+    .nullable()
     .or(z.literal("")),
 });

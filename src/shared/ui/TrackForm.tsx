@@ -16,7 +16,7 @@ interface Props {
   values?: TrackFormValues;
   genres: Genre[];
   isSubmitting: boolean;
-  onSubmit: (values: Omit<TrackFormValues, "genres"> & { genres: string[] }) => void;
+  onSubmit: (values: TrackFormValues) => void;
 }
 
 export const TrackForm: React.FC<Props> = ({ values, genres, isSubmitting, onSubmit }) => {
@@ -41,10 +41,7 @@ export const TrackForm: React.FC<Props> = ({ values, genres, isSubmitting, onSub
         form.setError("coverImage", { message: coverLoadingError, type: "custom" });
         return;
       }
-      onSubmit({
-        ...values,
-        genres: values.genres.map(({ value }) => value),
-      });
+      onSubmit(values);
     },
     (errors) => console.log({ errors }),
   );
@@ -84,7 +81,7 @@ export const TrackForm: React.FC<Props> = ({ values, genres, isSubmitting, onSub
                 <MultipleSelector
                   {...field}
                   value={field.value}
-                  defaultOptions={options}
+                  options={options}
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       No options
