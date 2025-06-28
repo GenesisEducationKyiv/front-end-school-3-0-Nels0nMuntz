@@ -21,3 +21,11 @@ The project follows the **Feature-Sliced Design (FSD)** methodology for scalable
 
 - 🔁 **Bulk delete** tracks
 - ⚡ **Optimistic UI updates**
+
+## 🔗 Backend Server
+
+The backend server for this project is available at:
+
+👉 [https://github.com/Nels0nMuntz/music-player-server.git](https://github.com/Nels0nMuntz/music-player-server.git)
+
+It provides the GraphQL API and file upload functionality required for managing tracks. 

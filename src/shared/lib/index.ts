@@ -5,6 +5,7 @@ export {
   formatDate,
   isFormData,
   parseApiResponse,
+  safeParseApiResponse,
   unwrapQueryResult,
 } from "./utils";
 export { PAGINATION_PAGE_SIZE } from "./constants";

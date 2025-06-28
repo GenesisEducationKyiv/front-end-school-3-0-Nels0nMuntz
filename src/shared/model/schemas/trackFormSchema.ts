@@ -17,7 +17,7 @@ export const trackFormSchema = z.object({
     .regex(/^[a-zA-Z0-9\s.,!?'"-_:/;]+$/, {
       message: "Only letters, numbers, spaces, and common symbols are allowed",
     })
-    .optional()
+    .nullable()
     .or(z.literal("")),
   genres: z
     .array(z.object({ label: z.string(), value: z.string() }))
@@ -26,6 +26,6 @@ export const trackFormSchema = z.object({
   coverImage: z
     .string()
     .url({ message: "Cover image must be a valid URL." })
-    .optional()
+    .nullable()
     .or(z.literal("")),
 });

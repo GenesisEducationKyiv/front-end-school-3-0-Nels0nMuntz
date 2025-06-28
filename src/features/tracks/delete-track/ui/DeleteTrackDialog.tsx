@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
   Button,
 } from "@/shared/ui";
-import { useDeleteTrackMutation } from "../api/useDeleteTrackMutation";
+import { useDeleteTrackApolloMutation } from "../api/useDeleteTrackApolloMutation";
 import {
   usePlaylistCurrentTrackIndex,
   usePlaylistTracks,
@@ -35,7 +35,7 @@ export const DeleteTrackDialog: React.FC<Props> = ({
   const tracks = usePlaylistTracks();
   const trackIndex = usePlaylistCurrentTrackIndex();
   const { pushTrackToQueue } = usePlaylistActions();
-  const { mutate, isPending } = useDeleteTrackMutation({ onSuccess: onDeleted });
+  const { mutate, isPending } = useDeleteTrackApolloMutation({ onSuccess: onDeleted });
   const handleDelete = () => {
     const currentTrack = tracks[trackIndex];
     if (!currentTrack) {

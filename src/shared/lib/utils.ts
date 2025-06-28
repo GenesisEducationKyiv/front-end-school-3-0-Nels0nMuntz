@@ -64,6 +64,23 @@ export const parseApiResponse = <T>(
   }
 };
 
+export const safeParseApiResponse = <T>(
+  response: unknown,
+  schema: z.ZodSchema<T>
+) => {
+  const result = schema.safeParse(response);
+
+  if (!result.success) {
+    console.error("Response validation error:", result.error.errors);
+    return {
+      ...result,
+      error: new Error("Invalid data format received from the API."),
+    }
+  }
+
+  return result;
+};
+
 export const unwrapQueryResult = <
   TData,
   TErrorType extends AppErrorType = AppErrorType

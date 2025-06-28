@@ -1,30 +1,30 @@
 import { toast } from "sonner";
-import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
-import { CreateTrackRequest } from "@/entities/track";
+import { GENRE_API_ERROR_MESSAGES, useGenresApolloQuery } from "@/entities/genres";
 import { TrackForm } from "@/shared/ui";
 import { unwrapQueryResult } from "@/shared/lib";
-import { useAddTrackMutation } from "../api/useAddTrackMutation";
+import { TrackFormValues } from "@/shared/model";
+import { useAddTrackApolloMutation } from "../api/useAddTrackApolloMutation";
 
 interface Props {
   onSubmitted: () => void;
 }
 
 export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
-  const { genresResult } = useGenresQuery();
+  const { data: genresResult } = useGenresApolloQuery();
   const { data = [], error } = unwrapQueryResult(genresResult);
-  const { mutate, isPending } = useAddTrackMutation({ onSuccess: onSubmitted });
-  const handleSubmit = (values: CreateTrackRequest) => {
+  const { mutate, isPending } = useAddTrackApolloMutation({ onSuccess: onSubmitted });
+  const handleSubmit = (values: TrackFormValues) => {
     mutate({
       title: values.title.trim(),
       artist: values.artist.trim(),
       album: values.album?.trim(),
       coverImage: values.coverImage?.trim(),
-      genres: values.genres,
+      genres: values.genres.map(({ value }) => value),
     });
   };
 
   if (error) {
-    toast.error(GENRE_API_ERROR_MESSAGES[error.type]);
+    toast.error(GENRE_API_ERROR_MESSAGES[error.type as keyof typeof GENRE_API_ERROR_MESSAGES]);
   }
 
   return (
