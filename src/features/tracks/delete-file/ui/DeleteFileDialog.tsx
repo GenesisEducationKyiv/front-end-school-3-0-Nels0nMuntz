@@ -11,7 +11,7 @@ import {
   Button,
 } from "@/shared/ui";
 import { Loader2 } from "lucide-react";
-import { useDeleteFileMutation } from "../api/useDeleteFileMutation";
+import { useDeleteFileApolloMutation } from "../api/useDeleteFileApolloMutation";
 
 interface Props extends PropsWithChildren {
   trackId: string;
@@ -27,7 +27,7 @@ export const DeleteFileDialog: React.FC<Props> = ({
   onOpenChange,
   onDeleted,
 }) => {
-  const { mutate, isPending } = useDeleteFileMutation({ onSuccess: onDeleted });
+  const { mutate, isPending } = useDeleteFileApolloMutation({ onSuccess: onDeleted });
   const handleDelete = () => mutate(trackId);
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>

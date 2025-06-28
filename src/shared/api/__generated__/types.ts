@@ -140,6 +140,13 @@ export type AddTrackMutationVariables = Exact<{
 
 export type AddTrackMutation = { __typename?: 'Mutation', addTrack: { __typename?: 'Track', updatedAt: string, title: string, slug: string, id: string, genres: Array<string>, createdAt: string, coverImage?: string | null, audioFile?: string | null, artist: string, album?: string | null } };
 
+export type DeleteTrackFileMutationVariables = Exact<{
+  deleteTrackFileId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteTrackFileMutation = { __typename?: 'Mutation', deleteTrackFile: { __typename?: 'Track', id: string, title: string, artist: string, album?: string | null, genres: Array<string>, slug: string, coverImage?: string | null, audioFile?: string | null, createdAt: string, updatedAt: string } };
+
 export type DeleteTracksMutationVariables = Exact<{
   ids: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
