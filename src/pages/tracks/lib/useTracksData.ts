@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { GENRE_API_ERROR_MESSAGES, useGenresQuery } from "@/entities/genres";
-import { TRACk_API_ERROR_MESSAGES } from "@/entities/track";
+import { TRACK_API_ERROR_MESSAGES, useTracksApolloQuery } from "@/entities/track";
 import {
   SortKey,
   useFilters,
@@ -11,7 +11,6 @@ import {
   useSorting,
 } from "@/shared/model";
 import { unwrapQueryResult, useDebounce } from "@/shared/lib";
-import { useTracksQuery } from "../api/useTracksQuery";
 
 export const useTracksData = () => {
   const sorting = useSorting();
@@ -22,7 +21,7 @@ export const useTracksData = () => {
   const { setSorting, setFilters, setPagination, setIsSearching } =
     useSettingsActions();
   const { genresResult, isLoadingGenres } = useGenresQuery();
-  const { tracksResult, isLoadingTracks } = useTracksQuery({
+  const { data: tracksResult, loading: isLoadingTracks } = useTracksApolloQuery({
     pagination,
     sorting: {
       sortBy: sorting[0]?.id as SortKey,
@@ -33,9 +32,9 @@ export const useTracksData = () => {
       genre: filters.genres,
     },
     search: debouncedSearchText,
-    queryOptions: {
-      placeholderData: (oldData) => oldData,
-    },
+    // queryOptions: {
+    //   placeholderData: (oldData) => oldData,
+    // },
   });
   const { data: genresData, error: genresError } = unwrapQueryResult(genresResult);
   const { data: tracksData, error: tracksError } = unwrapQueryResult(tracksResult);
@@ -65,7 +64,7 @@ export const useTracksData = () => {
   ]);
 
   if (tracksError) {
-    toast.error(TRACk_API_ERROR_MESSAGES[tracksError.type]);
+    toast.error(TRACK_API_ERROR_MESSAGES[tracksError.type as keyof typeof TRACK_API_ERROR_MESSAGES]);
   }
   if (genresError) {
     toast.error(GENRE_API_ERROR_MESSAGES[genresError.type]);

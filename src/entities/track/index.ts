@@ -11,5 +11,6 @@ export { uploadAudioFile } from "./api/uploadAudioFile";
 export { deleteFile } from "./api/deleteFile";
 export { deleteTracks } from "./api/deleteTracks";
 export { useTrackQuery } from "./api/useTrackQuery";
+export { useTracksApolloQuery } from "./api/useTracksApolloQuery";
 
-export { TRACk_API_ERROR_MESSAGES } from "./config/constants/trackApiErrorMessages";
+export { TRACK_API_ERROR_MESSAGES } from "./config/constants/trackApiErrorMessages";

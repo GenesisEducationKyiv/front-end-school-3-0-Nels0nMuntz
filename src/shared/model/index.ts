@@ -7,6 +7,7 @@ export type {
   SortKey,
   SortOrder,
 } from "./types/trackListSettings";
+export type { ApolloQueryResult } from "./types/apolloQueryResult";
 
 export {
   useFilters,
