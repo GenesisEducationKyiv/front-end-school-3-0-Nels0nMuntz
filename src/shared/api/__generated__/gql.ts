@@ -14,11 +14,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\nquery Genres {\n  getAllGenres\n}\n": typeof types.GenresDocument,
+    "\nquery Query {\n  genres\n}\n": typeof types.QueryDocument,
     "\nquery Tracks($params: TracksInput) {\n  tracks(params: $params) {\n    data {\n      id\n      title\n      artist\n      album\n      genres\n      slug\n      coverImage\n      audioFile\n      createdAt\n      updatedAt\n    }\n    meta {\n      total\n      page\n      limit\n      totalPages\n    }\n  }\n}\n": typeof types.TracksDocument,
 };
 const documents: Documents = {
-    "\nquery Genres {\n  getAllGenres\n}\n": types.GenresDocument,
+    "\nquery Query {\n  genres\n}\n": types.QueryDocument,
     "\nquery Tracks($params: TracksInput) {\n  tracks(params: $params) {\n    data {\n      id\n      title\n      artist\n      album\n      genres\n      slug\n      coverImage\n      audioFile\n      createdAt\n      updatedAt\n    }\n    meta {\n      total\n      page\n      limit\n      totalPages\n    }\n  }\n}\n": types.TracksDocument,
 };
 
@@ -39,7 +39,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery Genres {\n  getAllGenres\n}\n"): (typeof documents)["\nquery Genres {\n  getAllGenres\n}\n"];
+export function gql(source: "\nquery Query {\n  genres\n}\n"): (typeof documents)["\nquery Query {\n  genres\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

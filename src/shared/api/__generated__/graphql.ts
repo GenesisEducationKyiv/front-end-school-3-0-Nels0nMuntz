@@ -16,9 +16,58 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type BatchDeleteResponse = {
+  __typename?: 'BatchDeleteResponse';
+  failed: Array<Scalars['String']['output']>;
+  success: Array<Scalars['String']['output']>;
+};
+
+export type CreateTrackInput = {
+  album?: InputMaybe<Scalars['String']['input']>;
+  artist: Scalars['String']['input'];
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  genres: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addTrack: Track;
+  deleteTrack: Scalars['Boolean']['output'];
+  deleteTrackFile: Track;
+  deleteTracks: BatchDeleteResponse;
+  updateTrack: Track;
+};
+
+
+export type MutationAddTrackArgs = {
+  input: CreateTrackInput;
+};
+
+
+export type MutationDeleteTrackArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteTrackFileArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteTracksArgs = {
+  ids: Array<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateTrackArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateTrackInput;
+};
+
 export type Query = {
   __typename?: 'Query';
-  getAllGenres: Array<Scalars['String']['output']>;
+  genres: Array<Scalars['String']['output']>;
   tracks: TracksResponse;
 };
 
@@ -65,10 +114,19 @@ export type TracksResponse = {
   meta: TracksMeta;
 };
 
-export type GenresQueryVariables = Exact<{ [key: string]: never; }>;
+export type UpdateTrackInput = {
+  album?: InputMaybe<Scalars['String']['input']>;
+  artist?: InputMaybe<Scalars['String']['input']>;
+  audioFile?: InputMaybe<Scalars['String']['input']>;
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  genres?: InputMaybe<Array<Scalars['String']['input']>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GenresQuery = { __typename?: 'Query', getAllGenres: Array<string> };
+export type QueryQuery = { __typename?: 'Query', genres: Array<string> };
 
 export type TracksQueryVariables = Exact<{
   params?: InputMaybe<TracksInput>;
@@ -78,5 +136,5 @@ export type TracksQueryVariables = Exact<{
 export type TracksQuery = { __typename?: 'Query', tracks: { __typename?: 'TracksResponse', data: Array<{ __typename?: 'Track', id: string, title: string, artist: string, album?: string | null, genres: Array<string>, slug: string, coverImage?: string | null, audioFile?: string | null, createdAt: string, updatedAt: string }>, meta: { __typename?: 'TracksMeta', total: number, page: number, limit: number, totalPages: number } } };
 
 
-export const GenresDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Genres"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllGenres"}}]}}]} as unknown as DocumentNode<GenresQuery, GenresQueryVariables>;
+export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"genres"}}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
 export const TracksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Tracks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TracksInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tracks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"artist"}},{"kind":"Field","name":{"kind":"Name","value":"album"}},{"kind":"Field","name":{"kind":"Name","value":"genres"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"}},{"kind":"Field","name":{"kind":"Name","value":"audioFile"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"meta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"totalPages"}}]}}]}}]}}]} as unknown as DocumentNode<TracksQuery, TracksQueryVariables>;

@@ -7,8 +7,8 @@ import { getGenresSchema } from "../model/schemas/getGenresSchema";
 import { GenreErrorType } from "../model/types/genreErrorType";
 
 const GENRES = gql(`
-query Genres {
-  getAllGenres
+query Query {
+  genres
 }
 `);
 
@@ -18,7 +18,7 @@ export const useGenresApolloQuery = (): ApolloQueryResult<string[]> => {
   });
 
   if (data) {
-    const parsed = safeParseApiResponse(data.getAllGenres, getGenresSchema);
+    const parsed = safeParseApiResponse(data.genres, getGenresSchema);
     if (!parsed.success) {
       return {
         data: R.Error(

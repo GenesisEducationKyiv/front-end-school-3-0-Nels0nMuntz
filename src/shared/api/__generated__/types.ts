@@ -14,9 +14,58 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type BatchDeleteResponse = {
+  __typename?: 'BatchDeleteResponse';
+  failed: Array<Scalars['String']['output']>;
+  success: Array<Scalars['String']['output']>;
+};
+
+export type CreateTrackInput = {
+  album?: InputMaybe<Scalars['String']['input']>;
+  artist: Scalars['String']['input'];
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  genres: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addTrack: Track;
+  deleteTrack: Scalars['Boolean']['output'];
+  deleteTrackFile: Track;
+  deleteTracks: BatchDeleteResponse;
+  updateTrack: Track;
+};
+
+
+export type MutationAddTrackArgs = {
+  input: CreateTrackInput;
+};
+
+
+export type MutationDeleteTrackArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteTrackFileArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteTracksArgs = {
+  ids: Array<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateTrackArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateTrackInput;
+};
+
 export type Query = {
   __typename?: 'Query';
-  getAllGenres: Array<Scalars['String']['output']>;
+  genres: Array<Scalars['String']['output']>;
   tracks: TracksResponse;
 };
 
@@ -63,10 +112,19 @@ export type TracksResponse = {
   meta: TracksMeta;
 };
 
-export type GenresQueryVariables = Exact<{ [key: string]: never; }>;
+export type UpdateTrackInput = {
+  album?: InputMaybe<Scalars['String']['input']>;
+  artist?: InputMaybe<Scalars['String']['input']>;
+  audioFile?: InputMaybe<Scalars['String']['input']>;
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  genres?: InputMaybe<Array<Scalars['String']['input']>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GenresQuery = { __typename?: 'Query', getAllGenres: Array<string> };
+export type QueryQuery = { __typename?: 'Query', genres: Array<string> };
 
 export type TracksQueryVariables = Exact<{
   params?: InputMaybe<TracksInput>;
