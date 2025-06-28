@@ -3,8 +3,8 @@ import { GENRE_API_ERROR_MESSAGES, useGenresApolloQuery } from "@/entities/genre
 import { Track } from "@/entities/track";
 import { TrackForm } from "@/shared/ui";
 import { unwrapQueryResult } from "@/shared/lib";
-import { useEditTrackMutation } from "../api/useEditTrackMutation";
 import { TrackFormValues } from "@/shared/model";
+import { useEditTrackApolloMutation } from "../api/useEditTrackApolloMutation";
 
 interface Props {
   track: Track;
@@ -14,14 +14,14 @@ interface Props {
 export const EditTrackForm: React.FC<Props> = ({ track, onUpdated }) => {
   const { data: genresResult } = useGenresApolloQuery();
   const { data = [], error } = unwrapQueryResult(genresResult);
-  const { mutate, isPending } = useEditTrackMutation({ onSuccess: onUpdated });
+  const { mutate, isPending } = useEditTrackApolloMutation({ onSuccess: onUpdated });
   const handleSubmit = (values: TrackFormValues) => {
     mutate({
       id: track.id,
       title: values.title.trim(),
       artist: values.artist.trim(),
-      album: values.album?.trim(),
-      coverImage: values.coverImage?.trim(),
+      album: values.album ? values.album.trim() : null,
+      coverImage: values.coverImage ? values.coverImage.trim() : null,
       genres: values.genres.map(({ value }) => value),
     });
   };

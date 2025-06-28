@@ -59,7 +59,6 @@ export type MutationDeleteTracksArgs = {
 
 
 export type MutationUpdateTrackArgs = {
-  id: Scalars['ID']['input'];
   input: UpdateTrackInput;
 };
 
@@ -118,6 +117,7 @@ export type UpdateTrackInput = {
   audioFile?: InputMaybe<Scalars['String']['input']>;
   coverImage?: InputMaybe<Scalars['String']['input']>;
   genres?: InputMaybe<Array<Scalars['String']['input']>>;
+  id: Scalars['String']['input'];
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -139,3 +139,10 @@ export type AddTrackMutationVariables = Exact<{
 
 
 export type AddTrackMutation = { __typename?: 'Mutation', addTrack: { __typename?: 'Track', updatedAt: string, title: string, slug: string, id: string, genres: Array<string>, createdAt: string, coverImage?: string | null, audioFile?: string | null, artist: string, album?: string | null } };
+
+export type UpdateTrackMutationVariables = Exact<{
+  input: UpdateTrackInput;
+}>;
+
+
+export type UpdateTrackMutation = { __typename?: 'Mutation', updateTrack: { __typename?: 'Track', id: string, title: string, artist: string, album?: string | null, genres: Array<string>, slug: string, coverImage?: string | null, audioFile?: string | null, createdAt: string, updatedAt: string } };
