@@ -21,3 +21,15 @@ The project follows the **Feature-Sliced Design (FSD)** methodology for scalable
 
 - 🔁 **Bulk delete** tracks
 - ⚡ **Optimistic UI updates**
+
+
+## Optimization Features
+
+- **Lazy Loading**  
+  Non-critical components such as dialogs are loaded on demand, reducing initial bundle size and speeding up load times.
+
+- **Bundle Analyzer**  
+  Integrated [`vite-bundle-analyzer`](https://github.com/btd/vite-plugin-bundle-analyzer) to visualize and inspect bundle content for optimization.
+
+- **Source Maps**  
+  Optional source maps for easier debugging. Enable by adding `VITE_ENABLE_SOURCEMAP=true` to the `.env` file.
