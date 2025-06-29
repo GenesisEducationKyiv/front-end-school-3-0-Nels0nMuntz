@@ -9,7 +9,7 @@ import { AudioPlayer } from "./components/AudioPlayer/AudioPlayer";
 import { usePlaylistIsInitialized } from "@/shared/model";
 import { LoadingIndicator } from "@/shared/ui";
 
-export const TracksPage = () => {
+const TracksPage = () => {
   const initialized = usePlaylistIsInitialized();
   return (
     <>
@@ -37,3 +37,5 @@ export const TracksPage = () => {
     </>
   );
 };
+
+export default TracksPage;

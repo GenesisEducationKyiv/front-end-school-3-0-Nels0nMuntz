@@ -4,20 +4,17 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/shared/ui";
 
-interface Props extends PropsWithChildren {
+export interface Props extends PropsWithChildren {
   title: string;
-  trigger: React.ReactNode;
   open: boolean;
   onOpenChange: (value: boolean) => void;
 }
 
-export const EditTrackDialog: React.FC<Props> = ({ title, trigger, open, children, onOpenChange }) => {
+const EditTrackDialog: React.FC<Props> = ({ title, open, children, onOpenChange }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
@@ -27,3 +24,5 @@ export const EditTrackDialog: React.FC<Props> = ({ title, trigger, open, childre
     </Dialog>
   );
 };
+
+export default EditTrackDialog;

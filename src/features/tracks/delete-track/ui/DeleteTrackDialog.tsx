@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import { Loader2 } from "lucide-react";
 import {
   AlertDialog,
@@ -8,7 +7,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
   Button,
 } from "@/shared/ui";
 import { useDeleteTrackMutation } from "../api/useDeleteTrackMutation";
@@ -18,24 +16,25 @@ import {
   usePlaylistActions,
 } from "@/shared/model";
 
-interface Props extends PropsWithChildren {
+export interface Props {
   trackId: string;
   open: boolean;
   onOpenChange: (value: boolean) => void;
   onDeleted: () => void;
 }
 
-export const DeleteTrackDialog: React.FC<Props> = ({
+const DeleteTrackDialog: React.FC<Props> = ({
   trackId,
   open,
-  children,
   onOpenChange,
   onDeleted,
 }) => {
   const tracks = usePlaylistTracks();
   const trackIndex = usePlaylistCurrentTrackIndex();
   const { pushTrackToQueue } = usePlaylistActions();
-  const { mutate, isPending } = useDeleteTrackMutation({ onSuccess: onDeleted });
+  const { mutate, isPending } = useDeleteTrackMutation({
+    onSuccess: onDeleted,
+  });
   const handleDelete = () => {
     const currentTrack = tracks[trackIndex];
     if (!currentTrack) {
@@ -54,17 +53,20 @@ export const DeleteTrackDialog: React.FC<Props> = ({
   };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent data-testid="confirm-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the track from your library.
+            This action cannot be undone. This will permanently delete the track
+            from your library.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
-            <Button variant="outline" className="bg-white min-w-24" data-testid="cancel-delete">
+            <Button
+              variant="outline"
+              className="bg-white min-w-24"
+              data-testid="cancel-delete">
               Cancel
             </Button>
           </AlertDialogCancel>
@@ -72,8 +74,7 @@ export const DeleteTrackDialog: React.FC<Props> = ({
             variant="destructive"
             onClick={handleDelete}
             className="min-w-24"
-            data-testid="confirm-delete"
-          >
+            data-testid="confirm-delete">
             {isPending ? <Loader2 className="animate-spin" /> : "Delete"}
           </Button>
         </AlertDialogFooter>
@@ -81,3 +82,5 @@ export const DeleteTrackDialog: React.FC<Props> = ({
     </AlertDialog>
   );
 };
+
+export default DeleteTrackDialog;

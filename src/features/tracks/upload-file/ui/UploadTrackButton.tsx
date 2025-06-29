@@ -3,7 +3,7 @@ import { Upload } from "lucide-react";
 import { Button } from "@/shared/ui";
 import { Track } from "@/entities/track";
 import { cn } from "@/shared/lib";
-import { UploadTrackDialog } from "./UploadTrackDialog";
+import type { Props as UploadTrackDialogProps } from "./UploadTrackDialog";
 import { usePlaylistActions } from "@/shared/model";
 
 interface Props {
@@ -13,24 +13,46 @@ interface Props {
 export const UploadTrackButton: React.FC<Props> = ({ track }) => {
   const { pushTrackToQueue } = usePlaylistActions();
   const [open, setOpen] = useState(false);
+  const [Dialog, setDialog] =
+    useState<React.ComponentType<UploadTrackDialogProps> | null>(null);
+
   const onUploaded = (track: Track) => {
     pushTrackToQueue(track);
   };
+  const handleClick = async () => {
+    if (!Dialog) {
+      const dialog = await import("./UploadTrackDialog");
+      setDialog(() => dialog.UploadTrackDialog);
+    }
+    setOpen(true);
+  };
   return (
-    <UploadTrackDialog trackId={track.id} open={open} onOpenChange={setOpen} onSuccess={onUploaded}>
+    <>
       <Button
         size="icon"
         variant="outline"
         className="cursor-pointer relative bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: `url(${track.coverImage})` }}
         data-testid={`upload-track-${track.id}`}
-      >
-        {track.coverImage && <div className="absolute inset-0 bg-black/30 z-0" />}
+        onClick={handleClick}>
+        {track.coverImage && (
+          <div className="absolute inset-0 bg-black/30 z-0" />
+        )}
         <span className="sr-only">Upload an audio file</span>
         <div className="relative z-10">
-          <Upload className={cn(track.coverImage ? "text-white" : "text-foreground")} />
+          <Upload
+            className={cn(track.coverImage ? "text-white" : "text-foreground")}
+          />
         </div>
       </Button>
-    </UploadTrackDialog>
+      {Dialog && (
+        <Dialog
+          trackId={track.id}
+          open={open}
+          onOpenChange={setOpen}
+          onSuccess={onUploaded}
+        />
+      )}
+    </>
   );
 };

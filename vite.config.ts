@@ -6,7 +6,13 @@ import { analyzer } from "vite-bundle-analyzer";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), analyzer()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    analyzer({
+      openAnalyzer: false,
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -18,5 +24,5 @@ export default defineConfig({
   },
   build: {
     sourcemap: false,
-  }
+  },
 });

@@ -7,23 +7,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
   Button,
 } from "@/shared/ui";
 import { Loader2 } from "lucide-react";
 import { useDeleteFileMutation } from "../api/useDeleteFileMutation";
 
-interface Props extends PropsWithChildren {
+export interface Props extends PropsWithChildren {
   trackId: string;
   open: boolean;
   onOpenChange: (value: boolean) => void;
   onDeleted: () => void;
 }
 
-export const DeleteFileDialog: React.FC<Props> = ({
+const DeleteFileDialog: React.FC<Props> = ({
   trackId,
   open,
-  children,
   onOpenChange,
   onDeleted,
 }) => {
@@ -31,7 +29,6 @@ export const DeleteFileDialog: React.FC<Props> = ({
   const handleDelete = () => mutate(trackId);
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -53,3 +50,5 @@ export const DeleteFileDialog: React.FC<Props> = ({
     </AlertDialog>
   );
 };
+
+export default DeleteFileDialog;
