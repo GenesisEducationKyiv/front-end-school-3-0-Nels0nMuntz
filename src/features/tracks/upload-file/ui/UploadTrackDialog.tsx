@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Loader2 } from "lucide-react";
 import {
@@ -8,13 +8,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/shared/ui";
 import { UploadTrackDropzone } from "./UploadTrackDropzone";
 import { useUploadAudioFileMutation } from "../api/useUploadAudioFileMutation";
 import { Track } from "@/entities/track";
 
-interface Props extends PropsWithChildren {
+export interface Props {
   trackId: string;
   open: boolean;
   onOpenChange: (value: boolean) => void;
@@ -24,7 +23,6 @@ interface Props extends PropsWithChildren {
 export const UploadTrackDialog: React.FC<Props> = ({
   trackId,
   open,
-  children,
   onOpenChange,
   onSuccess,
 }) => {
@@ -40,7 +38,6 @@ export const UploadTrackDialog: React.FC<Props> = ({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload sound</DialogTitle>
