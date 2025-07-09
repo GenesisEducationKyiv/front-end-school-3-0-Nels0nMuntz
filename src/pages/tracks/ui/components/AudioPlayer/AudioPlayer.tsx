@@ -95,6 +95,7 @@ export const AudioPlayer = () => {
           <CircleChevronLeft
             className={cn(["size-8", hasPrevious ? "text-primary" : "text-muted-foreground"])}
           />
+          <span className="sr-only">Previous track</span>
         </Button>
         <Button
           variant="link"
@@ -109,6 +110,7 @@ export const AudioPlayer = () => {
           ) : (
             <CirclePlay className="size-12 text-primary" />
           )}
+          <span className="sr-only">{isPlaying ? "Pause" : "Play"}</span>
         </Button>
         <Button
           variant="link"
@@ -119,6 +121,7 @@ export const AudioPlayer = () => {
           <CircleChevronRight
             className={cn(["size-8", hasNext ? "text-primary" : "text-muted-foreground"])}
           />
+          <span className="sr-only">Next track</span>
         </Button>
       </div>
       {currentTrack && (
