@@ -79,6 +79,7 @@ export const TrackList = () => {
               indeterminate: table.getIsSomeRowsSelected(),
               onChange: table.getToggleAllRowsSelectedHandler(),
               testId: "select-all",
+              label: "Select all tracks",
             }}
           />
         ),
@@ -91,6 +92,7 @@ export const TrackList = () => {
                 indeterminate: row.getIsSomeSelected(),
                 onChange: row.getToggleSelectedHandler(),
                 testId: `track-checkbox-${row.id}`,
+                label: `Select track ${row.original.title}`,
               }}
             />
           </div>
@@ -169,6 +171,7 @@ export const TrackList = () => {
           <ActionsMenu track={info.row.original}>
             <Button size="icon" variant="ghost" className="cursor-pointer">
               <EllipsisVertical />
+              <span className="sr-only">More actions</span>
             </Button>
           </ActionsMenu>
         ),
@@ -262,6 +265,10 @@ export const TrackList = () => {
               className="bg-white hover:bg-white shadow-table rounded-xl overflow-hidden">
               {header.headers.map((header, index) => {
                 const key = header.id;
+                const columnHeader = header.column.columnDef.header;
+                const sortButtonLabel = typeof columnHeader === "string" 
+                  ? `Sort by ${columnHeader}`
+                  : "Selecty all rows";
                 return (
                   <TableHead
                     key={key}
@@ -323,7 +330,8 @@ export const TrackList = () => {
                               <span className="text-xs text-muted-foreground opacity-0 group-hover/sort:opacity-100 transition-opacity">
                                 ↑↓
                               </span>
-                            )}
+                          )}
+                          <span className="sr-only">{sortButtonLabel}</span>
                         </button>
                       </div>
                     )}

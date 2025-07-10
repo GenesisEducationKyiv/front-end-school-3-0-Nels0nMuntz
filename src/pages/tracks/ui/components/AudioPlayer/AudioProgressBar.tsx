@@ -22,7 +22,11 @@ export default function AudioProgressBar(props: AudioProgressBarProps) {
 
   return (
     <div className="absolute h-1 top-1/2 left-0 right-0 -translate-y-1/2 group">
+      <label htmlFor="audio-progress" className="sr-only">
+        Audio progress bar
+      </label>
       <input
+        id="audio-progress"
         type="range"
         name="progress"
         className={`progress-bar absolute inset-0 w-full m-0 h-full bg-transparent appearance-none cursor-pointer dark:bg-gray-700 group-hover:h-2 transition-all accent-primary before:absolute before:inset-0 before:h-full before:w-full before:bg-primary before:origin-left after:absolute after:h-full after:w-full after:bg-primary`}
