@@ -1,7 +1,7 @@
-import { CirclePlus } from "lucide-react";
-import { Button } from "@/shared/ui";
-import { AddTrackForm } from "./AddTrackForm";
 import { useState } from "react";
+import { CirclePlus } from "lucide-react";
+import { Button } from "music-player-ui";
+import { AddTrackForm } from "./AddTrackForm";
 import { AddTrackDialog } from "./AddTrackDialog";
 
 export const AddTrackButton = () => {
@@ -12,12 +12,13 @@ export const AddTrackButton = () => {
       open={open}
       onOpenChange={setOpen}
       trigger={
-        <Button className="flex items-center gap-x-2 cursor-pointer xs:w-auto w-full" data-testid="create-track-button">
-          <CirclePlus />
+        <Button
+          leftIcon={<CirclePlus />}
+          className="xs:w-auto w-full"
+          data-testid="create-track-button">
           <span>Add a track</span>
         </Button>
-      }
-    >
+      }>
       <AddTrackForm onSubmitted={handleSubmitted} />
     </AddTrackDialog>
   );

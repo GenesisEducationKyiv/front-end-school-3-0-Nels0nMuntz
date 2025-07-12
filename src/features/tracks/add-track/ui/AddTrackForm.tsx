@@ -32,18 +32,6 @@ export const AddTrackForm: React.FC<Props> = ({ onSubmitted }) => {
       onSubmit={handleSubmit}
       genres={data}
       isSubmitting={isPending}
-      // actions={
-      //   <DialogFooter className="sm:justify-end">
-      //     <DialogClose asChild>
-      //       <Button type="button" variant="secondary" className="min-w-24">
-      //         Close
-      //       </Button>
-      //     </DialogClose>
-      //     <Button type="submit" variant="default" disabled={isPending} className="min-w-24">
-      //       {isPending ? <Loader2 className="animate-spin" /> : "Create"}
-      //     </Button>
-      //   </DialogFooter>
-      // }
     />
   );
 };

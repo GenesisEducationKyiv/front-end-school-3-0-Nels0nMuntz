@@ -1,5 +1,5 @@
 import { ListFilter, ListFilterPlus } from "lucide-react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 
 interface Props {
   label: string;
@@ -9,7 +9,7 @@ interface Props {
 
 export const FilterButton: React.FC<Props> = ({ label, filter, onClick }) => {
   return (
-    <Button variant="ghost" className="cursor-pointer" onClick={onClick}>
+    <Button variant="ghost" onClick={onClick}>
       {filter ? (
         <ListFilter size={16} className="text-foreground" />
       ) : (

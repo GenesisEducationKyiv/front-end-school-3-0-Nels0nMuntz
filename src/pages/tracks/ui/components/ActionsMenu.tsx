@@ -18,7 +18,7 @@ export const ActionsMenu: React.FC<Props> = ({ track, children }) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="flex flex-col gap-y-1">
         <DropdownMenuItem asChild>
           <EditTrackButton track={track} onCloseDialog={closeMenu} />
         </DropdownMenuItem>

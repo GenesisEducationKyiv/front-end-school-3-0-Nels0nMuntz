@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
+import { Button } from "music-player-ui";
 import {
-  Button,
   Form,
   FormControl,
   FormField,
@@ -21,7 +21,12 @@ interface Props {
   onReset: () => void;
 }
 
-export const FilterSelectForm: React.FC<Props> = ({ filter, options, onSubmit, onReset }) => {
+export const FilterSelectForm: React.FC<Props> = ({
+  filter,
+  options,
+  onSubmit,
+  onReset,
+}) => {
   const form = useForm<FilterFormValues>({
     defaultValues: {
       value: filter,
@@ -42,7 +47,9 @@ export const FilterSelectForm: React.FC<Props> = ({ filter, options, onSubmit, o
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Choose a genre" />
                   </SelectTrigger>
@@ -60,7 +67,11 @@ export const FilterSelectForm: React.FC<Props> = ({ filter, options, onSubmit, o
           )}
         />
         <div className="grid grid-cols-2 gap-2">
-          <Button variant="secondary" disabled={!filter} type="button" onClick={hadleReset}>
+          <Button
+            variant="secondary"
+            disabled={!filter}
+            type="button"
+            onClick={hadleReset}>
             Reset
           </Button>
           <Button variant="default" disabled={!currentValue} type="submit">

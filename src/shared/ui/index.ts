@@ -1,5 +1,4 @@
 export { Toaster } from "./tailwind/sonner";
-export { Button } from "./tailwind/button";
 export { Checkbox } from "./tailwind/checkbox";
 export { Input } from "./tailwind/input";
 export { Label } from "./tailwind/label";
