@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import { DeleteTrackDialog } from "./DeleteTrackDialog";
-import { forwardRef } from "react";
 
 interface Props {
   trackId: string;
@@ -24,10 +23,10 @@ export const DeleteTrackButton = forwardRef<HTMLButtonElement, Props>(({ trackId
       <Button
         ref={ref}
         variant="ghost"
-        className="w-full flex items-center gap-x-4"
+        className="min-w-24 gap-x-4"
         data-testid={`delete-track-${trackId}`}
+        leftIcon={<Trash2 className="shrink-0 text-destructive" />}
       >
-        <Trash2 className="shrink-0 text-destructive" />
         <span className="grow text-left text-destructive">Delete</span>
       </Button>
     </DeleteTrackDialog>

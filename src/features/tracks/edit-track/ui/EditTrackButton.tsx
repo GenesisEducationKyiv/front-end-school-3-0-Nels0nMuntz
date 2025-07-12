@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Pencil } from "lucide-react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import { Track } from "@/entities/track";
 import { EditTrackDialog } from "./EditTrackDialog";
 import { EditTrackForm } from "./EditTrackForm";
-import { forwardRef } from "react";
 
 interface Props {
   track: Track;
@@ -30,10 +29,10 @@ export const EditTrackButton = forwardRef<HTMLButtonElement, Props>(({ track, on
         <Button
           ref={ref}
           variant="ghost"
-          className="w-full flex items-center gap-x-4"
+          className="min-w-24  gap-x-4"
           data-testid={`edit-track-${track.id}`}
+          leftIcon={<Pencil className="shrink-0" />}
         >
-          <Pencil className="shrink-0" />
           <span className="grow text-left">Edit</span>
         </Button>
       }

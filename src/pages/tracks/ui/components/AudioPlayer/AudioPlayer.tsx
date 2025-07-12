@@ -6,9 +6,9 @@ import {
   Loader2,
   Music4,
 } from "lucide-react";
+import { Button } from "music-player-ui";
 import { useAudioPlayerData } from "@/pages/tracks/lib/useAudioPlayerData";
 import AudioProgressBar from "./AudioProgressBar";
-import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib";
 import { AudioPlayerSkeleton } from "./AudioPlayerSkeleton";
 import { API_BASE_URL } from "@/shared/configs";
@@ -90,7 +90,7 @@ export const AudioPlayer = () => {
           variant="link"
           onClick={playPrev}
           disabled={!currentTrack || !hasPrevious}
-          className="w-auto h-auto p-0 pr-0 pl-0 cursor-pointer"
+          className="w-auto h-auto p-0 pr-0 pl-0"
         >
           <CircleChevronLeft
             className={cn(["size-8", hasPrevious ? "text-primary" : "text-muted-foreground"])}
@@ -100,7 +100,7 @@ export const AudioPlayer = () => {
           variant="link"
           disabled={!isReady}
           onClick={togglePlay}
-          className="w-auto h-auto p-0 pr-0 pl-0 cursor-pointer"
+          className="w-auto h-auto p-0 pr-0 pl-0"
         >
           {!isReady && currentTrack ? (
             <Loader2 className="size-12 text-primary animate-spin" />
@@ -114,7 +114,7 @@ export const AudioPlayer = () => {
           variant="link"
           onClick={playNext}
           disabled={!currentTrack || !hasNext}
-          className="w-auto h-auto p-0 pr-0 pl-0 cursor-pointer"
+          className="w-auto h-auto p-0 pr-0 pl-0"
         >
           <CircleChevronRight
             className={cn(["size-8", hasNext ? "text-primary" : "text-muted-foreground"])}

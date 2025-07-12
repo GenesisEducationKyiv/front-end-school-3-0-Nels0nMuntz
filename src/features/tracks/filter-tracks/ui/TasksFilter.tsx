@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { ListFilter, ListFilterPlus } from "lucide-react";
+import { Button } from "music-player-ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
 import { FilterSelectForm } from "./FilterSelectForm";
 import { FilterInputForm } from "./FilterInputForm";
 import { FilterFormValues } from "../model/types/filterFormValues";
-import { Button, Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
-import { ListFilter, ListFilterPlus } from "lucide-react";
 
 export interface TasksFilterProps {
   testId?: string;
@@ -31,7 +32,7 @@ export const TasksFilter: React.FC<TasksFilterProps> = ({ testId, title, filter,
   return (
     <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="cursor-pointer" onClick={handleOpen} data-testid={testId}>
+        <Button variant="ghost" onClick={handleOpen} data-testid={testId}>
           {filter ? (
             <ListFilter 
               size={16} 

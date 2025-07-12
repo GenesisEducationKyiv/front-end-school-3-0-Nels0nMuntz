@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import { useSelections } from "@/shared/model";
 import { DeleteMultipleTracksDialog } from "./DeleteMultipleTraksDialog";
 
@@ -10,8 +10,9 @@ export const DeleteMultipleTraksButton = () => {
   if (Object.keys(selection).length === 0) return null;
   return (
     <DeleteMultipleTracksDialog open={open} onOpenChange={setOpen}>
-      <Button variant="secondary" className="cursor-pointer flex items-center gap-x-4">
-        <Trash2 className="shrink-0 text-destructive" />
+      <Button
+        variant="secondary"
+        leftIcon={<Trash2 className="shrink-0 text-destructive" />}>
         <span className="grow text-left text-destructive">Delete</span>
       </Button>
     </DeleteMultipleTracksDialog>

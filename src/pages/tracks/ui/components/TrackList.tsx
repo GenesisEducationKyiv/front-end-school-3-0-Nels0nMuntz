@@ -11,8 +11,8 @@ import {
   RowSelectionState,
 } from "@tanstack/react-table";
 import { EllipsisVertical } from "lucide-react";
+import { Button } from "music-player-ui";
 import {
-  Button,
   IndeterminateCheckbox,
   Table,
   TableBody,
@@ -42,6 +42,7 @@ import { ActionsMenu } from "./ActionsMenu";
 import TableSkeleton from "./TrackListSkeleton";
 import { useTracksData } from "../../lib/useTracksData";
 import { useSyncUrlParamsWithSettings } from "../../lib/useSyncUrlParamsWithSettings";
+
 
 type OnChangeFn<T> = (updaterOrValue: T | ((old: T) => T)) => void;
 
@@ -167,7 +168,7 @@ export const TrackList = () => {
         accessorKey: "more",
         cell: (info) => (
           <ActionsMenu track={info.row.original}>
-            <Button size="icon" variant="ghost" className="cursor-pointer">
+            <Button size="icon" variant="ghost">
               <EllipsisVertical />
             </Button>
           </ActionsMenu>

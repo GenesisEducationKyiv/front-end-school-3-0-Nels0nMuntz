@@ -1,6 +1,6 @@
 import { CirclePause, CirclePlay } from "lucide-react";
 import { Track } from "@/entities/track";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import {
   usePlaylistActions,
   usePlaylistCurrentTrackIndex,
@@ -37,7 +37,7 @@ export const PlayTrackButton: React.FC<Props> = ({ track }) => {
     <Button
       size="icon"
       variant="outline"
-      className="cursor-pointer relative bg-cover bg-center overflow-hidden"
+      className="relative bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: `url(${track.coverImage})` }}
       onClick={handleClick}
       data-testid={`play-button-${track.id}`}

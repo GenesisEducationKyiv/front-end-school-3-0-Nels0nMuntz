@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import { CircleX } from "lucide-react";
 import { DeleteFileDialog } from "./DeleteFileDialog";
 

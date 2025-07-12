@@ -1,8 +1,8 @@
 import { PropsWithChildren, useState } from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Loader2 } from "lucide-react";
+import { Button } from "music-player-ui";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogFooter,

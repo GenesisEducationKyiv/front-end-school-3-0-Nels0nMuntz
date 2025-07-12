@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Loader2 } from "lucide-react";
+import { Button } from "music-player-ui";
 import { useSelections } from "@/shared/model";
 import {
   AlertDialog,
@@ -10,7 +11,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
 } from "@/shared/ui";
 import { useDeleteMultipleTracksMutation } from "../api/useDeleteMultipleTracksMutation";
 import {
@@ -72,7 +72,7 @@ export const DeleteMultipleTracksDialog: React.FC<Props> = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
-            <Button variant="outline" className="bg-white min-w-24">
+            <Button variant="secondary" className="min-w-24">
               Cancel
             </Button>
           </AlertDialogCancel>

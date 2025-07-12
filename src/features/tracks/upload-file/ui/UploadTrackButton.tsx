@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Upload } from "lucide-react";
-import { Button } from "@/shared/ui";
+import { Button } from "music-player-ui";
 import { Track } from "@/entities/track";
 import { cn } from "@/shared/lib";
 import { UploadTrackDialog } from "./UploadTrackDialog";
@@ -21,7 +21,7 @@ export const UploadTrackButton: React.FC<Props> = ({ track }) => {
       <Button
         size="icon"
         variant="outline"
-        className="cursor-pointer relative bg-cover bg-center overflow-hidden"
+        className="relative bg-cover bg-center overflow-hidden"
         style={{ backgroundImage: `url(${track.coverImage})` }}
         data-testid={`upload-track-${track.id}`}
       >

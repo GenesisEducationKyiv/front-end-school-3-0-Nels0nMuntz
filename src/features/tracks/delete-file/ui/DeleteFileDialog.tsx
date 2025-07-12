@@ -8,9 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
 } from "@/shared/ui";
 import { Loader2 } from "lucide-react";
+import { Button } from "music-player-ui";
 import { useDeleteFileMutation } from "../api/useDeleteFileMutation";
 
 interface Props extends PropsWithChildren {
@@ -41,11 +41,11 @@ export const DeleteFileDialog: React.FC<Props> = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
-            <Button variant="outline" className="bg-white min-w-24 cursor-pointer">
+            <Button variant="destructive" className="min-w-24">
               Cancel
             </Button>
           </AlertDialogCancel>
-          <Button variant="destructive" onClick={handleDelete} className="min-w-24 cursor-pointer">
+          <Button variant="destructive" onClick={handleDelete} className="min-w-24">
             {isPending ? <Loader2 className="animate-spin" /> : "Delete"}
           </Button>
         </AlertDialogFooter>

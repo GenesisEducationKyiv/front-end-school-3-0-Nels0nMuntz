@@ -1,6 +1,6 @@
-import { Button } from "@/shared/ui";
-import { File, X } from "lucide-react";
 import { useState } from "react";
+import { File, X } from "lucide-react";
+import { Button } from "music-player-ui";
 import Dropzone, { DropzoneState } from "shadcn-dropzone";
 import { validateFile } from "../lib/validateFile";
 
@@ -62,7 +62,7 @@ export const UploadTrackDropzone: React.FC<Props> = ({ onChange }) => {
               <File />
               {file.name}
             </div>
-            <Button size="icon" variant="ghost" className="cursor-pointer" onClick={handleCancel}>
+            <Button size="icon" variant="ghost" onClick={handleCancel}>
               <X />
             </Button>
           </>
