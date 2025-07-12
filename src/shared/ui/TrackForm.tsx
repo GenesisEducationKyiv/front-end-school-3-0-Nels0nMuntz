@@ -2,13 +2,12 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { Button } from "music-player-ui";
+import { Button, MultipleSelector } from "music-player-ui";
 import { Genre } from "@/entities/genres";
 import { TrackFormValues } from "../model/types/trackFormValues";
 import { trackFormSchema } from "../model/schemas/trackFormSchema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./tailwind/form";
 import { TextField } from "./TextField";
-import { MultipleSelector } from "./MultipleSelector";
 import { CoverLoader } from "./CoverLoader";
 import { DialogClose, DialogFooter } from "./tailwind/dialog";
 
