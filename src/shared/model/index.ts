@@ -24,9 +24,17 @@ export {
   usePlaylistTracks,
   usePlaylistDirection,
   usePlaylistIsInitialized,
-  usePlaylistAudioControl,
   usePlaylistQueue,
 } from "./stores/playlistStore";
+
+export {
+  usePlayerIsReady,
+  usePlayerDuration,
+  usePlayerCurrentProgress,
+  usePlayerBuffered,
+  usePlayerAudioControl,
+  usePlayerActions,
+} from "./stores/playerStore";
 
 export { sortKeySchema } from "./schemas/sortKeySchema";
 export { sortOrderSchema } from "./schemas/sortOrderSchema";

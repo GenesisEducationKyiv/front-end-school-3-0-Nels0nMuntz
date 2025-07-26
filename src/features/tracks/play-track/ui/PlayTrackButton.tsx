@@ -6,7 +6,7 @@ import {
   usePlaylistCurrentTrackIndex,
   usePlaylistTracks,
   usePlaylistIsPlaying,
-  usePlaylistAudioControl,
+  usePlayerAudioControl
 } from "@/shared/model";
 
 interface Props {
@@ -17,7 +17,7 @@ export const PlayTrackButton: React.FC<Props> = ({ track }) => {
   const tracks = usePlaylistTracks();
   const isPlaying = usePlaylistIsPlaying();
   const currentTrackIndex = usePlaylistCurrentTrackIndex();
-  const audioControl = usePlaylistAudioControl();
+  const audioControl = usePlayerAudioControl();
   const { setCurrentTrackIndex } = usePlaylistActions();
 
   const isCurrentTrack = currentTrackIndex >= 0 ? tracks[currentTrackIndex].id === track.id : false;

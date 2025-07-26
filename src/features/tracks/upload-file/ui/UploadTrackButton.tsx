@@ -1,23 +1,17 @@
-import { useState } from "react";
+
 import { Upload } from "lucide-react";
 import { Button } from "@/shared/ui";
 import { Track } from "@/entities/track";
 import { cn } from "@/shared/lib";
 import { UploadTrackDialog } from "./UploadTrackDialog";
-import { usePlaylistActions } from "@/shared/model";
 
 interface Props {
   track: Track;
 }
 
 export const UploadTrackButton: React.FC<Props> = ({ track }) => {
-  const { pushTrackToQueue } = usePlaylistActions();
-  const [open, setOpen] = useState(false);
-  const onUploaded = (track: Track) => {
-    pushTrackToQueue(track);
-  };
   return (
-    <UploadTrackDialog trackId={track.id} open={open} onOpenChange={setOpen} onSuccess={onUploaded}>
+    <UploadTrackDialog trackId={track.id}>
       <Button
         size="icon"
         variant="outline"
